@@ -18,6 +18,14 @@ public class Livro {
     @Column(name = "IdLivro")
     private Long id;
 
+    @JoinColumn(name = "IdGenero", referencedColumnName = "IdGenero", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private GeneroLivro generoLivro;
+
+    @JoinColumn(name = "IdResumo", referencedColumnName = "IdResumo", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ResumoLivro resumoLivro;
+
     @Column(name = "Titulo")
     private String titulo;
 

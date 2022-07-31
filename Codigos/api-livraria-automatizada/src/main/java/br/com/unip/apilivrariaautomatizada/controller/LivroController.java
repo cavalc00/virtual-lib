@@ -18,8 +18,8 @@ public class LivroController {
     private final LivroService service;
 
     @PostMapping
-    public ResponseEntity<Void> createBook(@RequestBody LivroCreateRequest request){
-        service.createBook(request);
+    public ResponseEntity<Void> criarLivro(@RequestBody LivroCreateRequest request){
+        service.criarLivro(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
