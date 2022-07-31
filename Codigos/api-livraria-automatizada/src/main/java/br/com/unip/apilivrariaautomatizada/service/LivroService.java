@@ -12,14 +12,9 @@ public class LivroService {
 
     private final LivroRepository repository;
 
-    public void createBook(LivroCreateRequest request) {
-        Livro livro = Livro.builder()
-                .titulo(request.getTitle())
-                .autor(request.getAutor())
-                .anoLancamento(request.getYear())
-                .editora(request.getEditor())
-                .build();
+    public void criarLivro(LivroCreateRequest request) {
 
-        repository.save(livro);
+        //TODO
+
     }
 }
