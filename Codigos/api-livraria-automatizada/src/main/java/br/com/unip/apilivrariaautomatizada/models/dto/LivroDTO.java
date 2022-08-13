@@ -1,4 +1,4 @@
-package br.com.unip.apilivrariaautomatizada.models.request;
+package br.com.unip.apilivrariaautomatizada.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class LivroCreateRequest {
+public class LivroDTO {
 
     private String title;
 
