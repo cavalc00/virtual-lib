@@ -37,7 +37,7 @@ create table LocacaoLivro(
 	IdLocacao BIGINT auto_increment not null,
 	IdUsuario BIGINT not null,
 	IdLivro BIGINT not null,
-	DataLocado Date null,
+	DataLocado Date not null,
 	DataDevolvido Date null,
 	foreign key (IdUsuario) references Usuario(IdUsuario),
 foreign key (IdLivro) references Livro(IdLivro),
