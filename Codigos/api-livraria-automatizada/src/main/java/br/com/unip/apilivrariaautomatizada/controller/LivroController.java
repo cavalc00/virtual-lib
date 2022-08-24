@@ -4,7 +4,6 @@ import br.com.unip.apilivrariaautomatizada.models.dto.LivroDTO;
 import br.com.unip.apilivrariaautomatizada.models.response.LivroResponse;
 import br.com.unip.apilivrariaautomatizada.service.LivroService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

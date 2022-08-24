@@ -1,25 +1,22 @@
+create database Liv_DB;
+
+use Liv_DB;
+
 CREATE TABLE GeneroLivro (
 	IdGenero BIGINT auto_increment not null,
 	Nome VARCHAR(100) not null,
 primary key (IdGenero)
 ) ENGINE=InnoDB;
 
-CREATE TABLE ResumoLivro (
-	IdResumo BIGINT auto_increment not null,
-	Descricao text not null,
-primary key (IdResumo)
-) ENGINE=InnoDB;
-
 CREATE TABLE Livro (
 	IdLivro BIGINT auto_increment not null,
 	IdGenero BIGINT not null,
-	IdResumo BIGINT not null,
+	Resumo TEXT null,
 	Titulo VARCHAR(255) not null,
 	Autor VARCHAR(155) not null,
 	Editora VARCHAR(100) not null,
 	Ano INT null,
 	foreign key (IdGenero) references GeneroLivro(IdGenero),
-foreign key (IdResumoLivro) references ResumoLivro(IdResumo),
 primary KEY(IdLivro)
 ) ENGINE=InnoDB;
 
@@ -43,4 +40,14 @@ create table LocacaoLivro(
 foreign key (IdLivro) references Livro(IdLivro),
 primary key (IdLocacao)
 ) ENGINE=InnoDB;
+
+INSERT INTO liv_db.generolivro (Nome) values
+('Ficção científica'), ('Fantasia'), ('Distopia'), ('Ação e aventura'),
+('Horror'), ('Thriller e Suspense'), ('Ficção Policial'), ('Ficção histórica'),
+('Romance'), ('Ficção Contemporânea'), ('Realismo mágico'), ('Graphic Novel'),
+('Conto'), ('Infantil'), ('Memórias e autobiografia'), ('Biografia'),
+('Gastronomia'), ('Arte e Fotografia'), ('Autoajuda'), ('História'),
+('Viajem'), ('Crimes Reais'), ('Humor'), ('Religião e Espiritualidade'),
+('Humanidades e Ciências Sociais'), ('Tecnologia e Ciência'), ('Humor');
+
 

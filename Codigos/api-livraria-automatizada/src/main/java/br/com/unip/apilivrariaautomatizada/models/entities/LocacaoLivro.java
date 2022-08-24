@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Getter
@@ -12,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "usuario")
+@Table(name = "locacaolivro")
 public class LocacaoLivro {
 
     @Id
@@ -20,7 +19,7 @@ public class LocacaoLivro {
     @Column(name = "IdLocacao")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdUsuario", referencedColumnName = "IdUsuario", nullable = false)
     private Usuario usuario;
 
@@ -31,7 +30,7 @@ public class LocacaoLivro {
     @Column(name = "DataLocado", nullable = false)
     private LocalDate dataLocado;
 
-    @Column(name = "DateDevolvido")
-    private LocalDate dateDevolvido;
+    @Column(name = "DataDevolvido")
+    private LocalDate dataDevolvido;
 
 }

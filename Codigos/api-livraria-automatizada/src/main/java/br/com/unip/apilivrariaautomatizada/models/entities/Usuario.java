@@ -18,7 +18,7 @@ public class Usuario {
     @Column(name = "IdUsuario")
     private Long id;
 
-    @Column(name = "Name")
+    @Column(name = "Nome")
     private String nome;
 
     @Column(name = "Cpf")

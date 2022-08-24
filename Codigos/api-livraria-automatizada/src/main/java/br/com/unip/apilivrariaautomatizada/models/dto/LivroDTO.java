@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LivroDTO {
 
-    private String title;
+    private String titulo;
 
     private String autor;
 
-    private String editor;
+    private String editora;
 
-    private Integer year;
+    private Integer anoLancamento;
 }
