@@ -1,4 +1,4 @@
-package br.com.unip.apilivrariaautomatizada.models.entities;
+package br.com.unip.apilivrariaautomatizada.model.entity;
 
 import lombok.*;
 

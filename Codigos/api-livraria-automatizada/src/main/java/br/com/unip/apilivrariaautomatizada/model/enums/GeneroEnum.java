@@ -1,4 +1,4 @@
-package br.com.unip.apilivrariaautomatizada.models.enums;
+package br.com.unip.apilivrariaautomatizada.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

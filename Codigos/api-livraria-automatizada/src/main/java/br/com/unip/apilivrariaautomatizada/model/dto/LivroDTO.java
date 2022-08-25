@@ -1,4 +1,4 @@
-package br.com.unip.apilivrariaautomatizada.models.dto;
+package br.com.unip.apilivrariaautomatizada.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 public class LivroDTO {
 
     private String titulo;
+
+    private Long generoLivroId;
+
+    private String resumo;
 
     private String autor;
 

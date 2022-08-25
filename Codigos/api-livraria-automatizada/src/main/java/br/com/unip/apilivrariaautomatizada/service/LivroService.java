@@ -1,12 +1,16 @@
 package br.com.unip.apilivrariaautomatizada.service;
 
-import br.com.unip.apilivrariaautomatizada.models.dto.LivroDTO;
-import br.com.unip.apilivrariaautomatizada.models.entities.Livro;
-import br.com.unip.apilivrariaautomatizada.models.response.LivroResponse;
+import br.com.unip.apilivrariaautomatizada.mapper.LivroMapper;
+import br.com.unip.apilivrariaautomatizada.model.dto.LivroDTO;
+import br.com.unip.apilivrariaautomatizada.model.entity.GeneroLivro;
+import br.com.unip.apilivrariaautomatizada.model.entity.Livro;
+import br.com.unip.apilivrariaautomatizada.model.response.LivroResponse;
 import br.com.unip.apilivrariaautomatizada.repository.GeneroLivroRepository;
 import br.com.unip.apilivrariaautomatizada.repository.LivroRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,14 +20,19 @@ public class LivroService {
 
     private final LivroRepository livroRepository;
     private final GeneroLivroRepository generoLivroRepository;
+    private final LivroMapper livroMapper;
 
     public void criarLivro(LivroDTO request) {
-        try {
 
+        GeneroLivro generoLivro = generoLivroRepository.findById(request.getGeneroLivroId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
+        );
+
+        try {
             Livro livro = Livro.builder()
                     .titulo(request.getTitulo())
-                    //.generoLivro()
-                    //.resumoLivro()
+                    .generoLivro(generoLivro)
+                    .resumo(request.getResumo())
                     .autor(request.getAutor())
                     .anoLancamento(request.getAnoLancamento())
                     .editora(request.getEditora())
@@ -31,26 +40,45 @@ public class LivroService {
 
             livroRepository.save(livro);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            //TODO substituir por uma exception do projeto
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
     public void atualizarLivro(Long id, LivroDTO request) {
-        //TODO
+        Livro livro = livroRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
+        );
+
+        try {
+            livroMapper.toLivro(livro, request);
+            livroRepository.save(livro);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     public void deletarLivro(Long id) {
-        //TODO
+        Livro livro = livroRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
+        );
+
+        try {
+            livroRepository.delete(livro);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     public LivroResponse mostrarLivro(Long id) {
-        //TODO
-        return null;
+        Livro livro = livroRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
+        );
+
+        return livroMapper.toLivroResponse(livro);
     }
 
     public List<LivroResponse> mostrarTodosLivros() {
-        //TODO
-        return null;
+        List<Livro> livroList = livroRepository.findAll();
+        return livroMapper.toLivroResponseList(livroList);
     }
 }
