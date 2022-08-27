@@ -1,6 +1,5 @@
-package br.com.unip.apilivrariaautomatizada.models.response;
+package br.com.unip.apilivrariaautomatizada.model.response;
 
-import br.com.unip.apilivrariaautomatizada.models.entities.GeneroLivro;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +13,7 @@ public class LivroResponse {
 
     private Long id;
 
-    private GeneroLivro generoLivro;
+    private GeneroLivroResponse generoLivro;
 
     private String resumo;
 
