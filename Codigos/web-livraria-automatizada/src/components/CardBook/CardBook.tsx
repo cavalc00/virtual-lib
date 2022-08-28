@@ -1,6 +1,10 @@
 import React from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
 
+type ContentCardProps = {
+  
+}
+
 function CardBook() {
   return (
     <div>
@@ -19,7 +23,7 @@ function CardBook() {
           <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
         </ListGroup>
         <Card.Body>
-          <Button>Alugar Livro</Button>
+          <Button>Verificar disponibilidade</Button>
         </Card.Body>
       </Card>
     </div>
