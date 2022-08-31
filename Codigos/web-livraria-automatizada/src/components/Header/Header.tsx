@@ -7,10 +7,11 @@ import {
   Navbar,
   NavDropdown,
 } from "react-bootstrap";
+import './style.scss';
 
 function Header() {
   return (
-    <Navbar bg="light" expand="md">
+    <Navbar bg="light"  expand="md" className="margin-down">
       <Container fluid>
         <Navbar.Brand href="#">Livraria automatizada</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
