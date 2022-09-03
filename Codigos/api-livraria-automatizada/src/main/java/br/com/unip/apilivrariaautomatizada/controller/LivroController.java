@@ -42,8 +42,8 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LivroResponse>> mostrarTodosLivros() {
-        List<LivroResponse> livros = livroService.mostrarTodosLivros();
+    public ResponseEntity<List<LivroResponse>> mostrarTodosLivros(@RequestParam(required = false) Long idGeneroLivro) {
+        List<LivroResponse> livros = livroService.mostrarTodosLivros(idGeneroLivro);
         return ResponseEntity.ok(livros);
     }
 }

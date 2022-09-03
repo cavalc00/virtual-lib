@@ -7,7 +7,9 @@ import br.com.unip.apilivrariaautomatizada.model.entity.Livro;
 import br.com.unip.apilivrariaautomatizada.model.response.LivroResponse;
 import br.com.unip.apilivrariaautomatizada.repository.GeneroLivroRepository;
 import br.com.unip.apilivrariaautomatizada.repository.LivroRepository;
+import br.com.unip.apilivrariaautomatizada.repository.spec.LivroSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -77,8 +79,9 @@ public class LivroService {
         return livroMapper.toLivroResponse(livro);
     }
 
-    public List<LivroResponse> mostrarTodosLivros() {
-        List<Livro> livroList = livroRepository.findAll();
+    public List<LivroResponse> mostrarTodosLivros(Long idGeneroLivro) {
+        var spec = Specification.where(new LivroSpecification(idGeneroLivro));
+        List<Livro> livroList = livroRepository.findAll(spec);
         return livroMapper.toLivroResponseList(livroList);
     }
 }
