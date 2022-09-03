@@ -45,8 +45,8 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  function carregarLivros() {
-    LivroService.findAll()
+  function carregarLivros(id?: any) {
+    LivroService.findAll(id)
       .then((response) => {
         setLivros(
           response.data.sort((a, b) => {
@@ -80,7 +80,10 @@ function Home() {
                 {generos.map((genero, index) => (
                   <NavDropdown.Item
                     key={index}
-                    onClick={() => setGeneroSelecionado(genero.nome)}
+                    onClick={() => {
+                      setGeneroSelecionado(genero.nome)
+                      carregarLivros(genero.id)
+                    }}
                   >
                     {genero.nome}
                   </NavDropdown.Item>
