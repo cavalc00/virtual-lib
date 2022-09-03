@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -7,13 +7,15 @@ import {
   Navbar,
   NavDropdown,
 } from "react-bootstrap";
-import './style.scss';
+import GeneroLivro from "../../models/GeneroLivro";
+import GeneroService from "../../services/GeneroService";
+import "./style.scss";
 
 function Header() {
   return (
-    <Navbar bg="light"  expand="md" className="margin-down">
+    <Navbar bg="light" expand="md" className="margin-down">
       <Container fluid>
-        <Navbar.Brand href="#">Livraria automatizada</Navbar.Brand>
+        <Navbar.Brand>Livraria automatizada</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse>
           <Nav
@@ -21,17 +23,9 @@ function Header() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Lista de livros</Nav.Link>
+            <Nav.Link href="/">Lista de livros</Nav.Link>
+            <Nav.Link href="about">Sobre</Nav.Link>
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Ex.: Sherlock Holmes: um estudo em vermelho"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Pesquisar</Button>
-          </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>

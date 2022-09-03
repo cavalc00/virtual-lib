@@ -6,7 +6,6 @@ import br.com.unip.apilivrariaautomatizada.service.LivroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,35 +15,35 @@ import java.util.List;
 @RequestMapping("/livro")
 public class LivroController {
 
-    private final LivroService service;
+    private final LivroService livroService;
 
     @PostMapping
     public ResponseEntity<Void> criarLivro(@RequestBody LivroDTO request) {
-        service.criarLivro(request);
+        livroService.criarLivro(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Void> atualizarLivro(@PathVariable("id") Long id, @RequestBody LivroDTO request) {
-        service.atualizarLivro(id, request);
+        livroService.atualizarLivro(id, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarLivro(@PathVariable("id") Long id) {
-        service.deletarLivro(id);
+        livroService.deletarLivro(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<LivroResponse> mostrarLivro(@PathVariable("id") Long id) {
-        LivroResponse response = service.mostrarLivro(id);
+        LivroResponse response = livroService.mostrarLivro(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping
     public ResponseEntity<List<LivroResponse>> mostrarTodosLivros() {
-        List<LivroResponse> livros = service.mostrarTodosLivros();
+        List<LivroResponse> livros = livroService.mostrarTodosLivros();
         return ResponseEntity.ok(livros);
     }
 }

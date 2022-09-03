@@ -36,6 +36,7 @@ CREATE TABLE Livro (
 	IdLivro BIGINT auto_increment not null,
 	IdGenero BIGINT not null,
 	Resumo TEXT null,
+	Capa VARCHAR(255) null,
 	Titulo VARCHAR(255) not null,
 	Autor VARCHAR(155) not null,
 	Editora VARCHAR(100) not null,
@@ -43,6 +44,7 @@ CREATE TABLE Livro (
 	foreign key (IdGenero) references GeneroLivro(IdGenero),
 primary KEY(IdLivro)
 ) ENGINE=InnoDB;
+ALTER TABLE Livro MAX_ROWS=10;
 
 create table LocacaoLivro(
 	IdLocacao BIGINT auto_increment not null,
@@ -65,3 +67,6 @@ INSERT INTO liv_db.generolivro (Nome) VALUES
 ('Humanidades e Ciências Sociais'), ('Tecnologia e Ciência'), ('Humor');
 
 INSERT INTO liv_db.perfil (Tipo) VALUES ('Admin'), ('User');
+
+
+
