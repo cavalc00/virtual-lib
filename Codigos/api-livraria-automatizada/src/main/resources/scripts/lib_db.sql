@@ -3,10 +3,34 @@ create database Liv_DB;
 use Liv_DB;
 
 CREATE TABLE GeneroLivro (
-	IdGenero BIGINT auto_increment not null,
-	Nome VARCHAR(100) not null,
+	IdGenero BIGINT AUTO_INCREMENT NOT NULL,
+	Nome VARCHAR(100) NOT NULL,
 primary key (IdGenero)
 ) ENGINE=InnoDB;
+
+CREATE TABLE Perfil(
+	IdPerfil BIGINT AUTO_INCREMENT NOT NULL,
+	Tipo VARCHAR(100) NOT null,
+	PRIMARY key (IdPerfil)
+) ENGINE=InnoDB;
+
+create table Usuario(
+	IdUsuario BIGINT auto_increment not null,
+	Nome VARCHAR(255) not null,
+	Cpf VARCHAR(14) not null,
+	Email VARCHAR(155) not null,
+	Login VARCHAR(155) not null,
+	Senha VARCHAR(255) not null,
+primary key (IdUsuario)
+) ENGINE=InnoDB;
+
+create table Perfil_Usuario(
+	IdUsuario BIGINT not null,
+	IdPerfil BIGINT not null,
+	foreign key (IdUsuario) references Usuario(IdUsuario),
+	foreign key (IdPerfil) references Perfil(IdPerfil),
+	primary KEY(IdUsuario, IdPerfil)
+)ENGINE=InnoDB;
 
 CREATE TABLE Livro (
 	IdLivro BIGINT auto_increment not null,
@@ -20,16 +44,6 @@ CREATE TABLE Livro (
 primary KEY(IdLivro)
 ) ENGINE=InnoDB;
 
-create table Usuario(
-	IdUsuario BIGINT auto_increment not null,
-	Nome VARCHAR(255) not null,
-	Cpf VARCHAR(14) not null,
-	Email VARCHAR(155) not null,
-	Login VARCHAR(155) not null,
-	Senha VARCHAR(10) not null,
-primary key (IdUsuario)
-) ENGINE=InnoDB;
-
 create table LocacaoLivro(
 	IdLocacao BIGINT auto_increment not null,
 	IdUsuario BIGINT not null,
@@ -41,7 +55,7 @@ foreign key (IdLivro) references Livro(IdLivro),
 primary key (IdLocacao)
 ) ENGINE=InnoDB;
 
-INSERT INTO liv_db.generolivro (Nome) values
+INSERT INTO liv_db.generolivro (Nome) VALUES
 ('Ficção científica'), ('Fantasia'), ('Distopia'), ('Ação e aventura'),
 ('Horror'), ('Thriller e Suspense'), ('Ficção Policial'), ('Ficção histórica'),
 ('Romance'), ('Ficção Contemporânea'), ('Realismo mágico'), ('Graphic Novel'),
@@ -50,4 +64,4 @@ INSERT INTO liv_db.generolivro (Nome) values
 ('Viajem'), ('Crimes Reais'), ('Humor'), ('Religião e Espiritualidade'),
 ('Humanidades e Ciências Sociais'), ('Tecnologia e Ciência'), ('Humor');
 
-
+INSERT INTO liv_db.perfil (Tipo) VALUES ('Admin'), ('User');
