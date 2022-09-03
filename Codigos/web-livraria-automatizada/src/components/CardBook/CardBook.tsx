@@ -25,12 +25,12 @@ function CardBook(props: ContentCardProps) {
         <Row className="row-blocks">
           {props.livros?.map((book, index) => (
             <Card className="book-style">
-              <Card.Img variant="top" />
+              <Card.Img variant="top" src={book.capa}/>
               <Card.Body className="ml-3">
                 <Card.Title className="title-style">{book.titulo}</Card.Title>
                 <ListGroup className="list-group-flush">
                   <ListGroup.Item>
-                    <label className="label-style">Genero:</label>{" "}
+                    <label className="label-style">Gênero:</label>{" "}
                     {book.generoLivro.nome}
                   </ListGroup.Item>
                   <ListGroup.Item>

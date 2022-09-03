@@ -3,6 +3,7 @@ package br.com.unip.apilivrariaautomatizada.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Blob;
 
 @Entity
 @Getter
@@ -37,4 +38,6 @@ public class Livro {
     @Column(name = "Resumo", columnDefinition = "TEXT")
     private String resumo;
 
+    @Column(name = "Capa")
+    private String capa;
 }

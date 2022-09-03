@@ -8,6 +8,7 @@ type Livro = {
     editora: string;
     anoLancamento: number;
     resumo: string;
+    capa: string;
 };
 
 export default Livro;
