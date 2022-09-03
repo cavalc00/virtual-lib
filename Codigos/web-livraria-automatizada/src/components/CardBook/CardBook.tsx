@@ -1,36 +1,55 @@
 import React from "react";
-import { Button, Card, ListGroup } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  ListGroup,
+  ProgressBar,
+  Row,
+} from "react-bootstrap";
+import Livro from "../../models/Livro";
+import "./style.scss";
 
 export type ContentCardProps = {
-  capa?: any;
-  titulo: string;
-  resumo: string;
-  genero: string;
-  autor: string;
-  ano: number;
+  livros?: Livro[];
+  errorRequest: boolean;
+  loading: boolean;
 };
 
 function CardBook(props: ContentCardProps) {
   return (
-    <div>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={props?.capa} />
-        <Card.Body>
-          <Card.Title>{props.titulo}</Card.Title>
-          <Card.Text>
-            {props.resumo}
-          </Card.Text>
-        </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroup.Item>{props.genero}</ListGroup.Item>
-          <ListGroup.Item>{props.autor}</ListGroup.Item>
-          <ListGroup.Item>{props.ano}</ListGroup.Item>
-        </ListGroup>
-        <Card.Body>
-          <Button>Verificar disponibilidade</Button>
-        </Card.Body>
-      </Card>
-    </div>
+    <Col>
+      {props.loading ? (
+        <ProgressBar animated now={100} />
+      ) : (
+        <Row className="row-blocks">
+          {props.livros?.map((book, index) => (
+            <Card className="book-style">
+              <Card.Img variant="top" />
+              <Card.Body className="ml-3">
+                <Card.Title className="title-style">{book.titulo}</Card.Title>
+                <ListGroup className="list-group-flush">
+                  <ListGroup.Item>
+                    <label className="label-style">Genero:</label>{" "}
+                    {book.generoLivro.nome}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <label className="label-style">Autor:</label> {book.autor}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <label className="label-style">Ano de lançamento:</label>{" "}
+                    {book.anoLancamento}
+                  </ListGroup.Item>
+                </ListGroup>
+                <Card.Body className="button-style">
+                  <Button size="sm">Verificar disponibilidade</Button>
+                </Card.Body>
+              </Card.Body>
+            </Card>
+          ))}
+        </Row>
+      )}
+    </Col>
   );
 }
 
