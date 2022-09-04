@@ -1,3 +1,4 @@
+import { getValue } from "@testing-library/user-event/dist/utils";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -18,6 +19,8 @@ function Home() {
   const [livros, setLivros] = useState<Livro[]>([]);
   const [generos, setGeneros] = useState<GeneroLivro[]>([]);
   const [generoSelecionado, setGeneroSelecionado] = useState<string>("Todos");
+  const [idGeneroSelecionado, setIdGeneroSelecionado] = useState<any>();
+  const [tituloSelecionado, setTituloSelecionado] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -45,8 +48,14 @@ function Home() {
       .finally(() => setLoading(false));
   }
 
-  function carregarLivros(id?: any) {
-    LivroService.findAll(id)
+  function handleOnChangeTitle(event: any) {
+    setTituloSelecionado(event.target.value);
+    carregarLivros(idGeneroSelecionado, tituloSelecionado);
+    // React.ChangeEvent<FormControlElement>
+  }
+
+  function carregarLivros(id?: any, titulo?: any) {
+    LivroService.findAll(id, titulo)
       .then((response) => {
         setLivros(
           response.data.sort((a, b) => {
@@ -67,41 +76,43 @@ function Home() {
 
   return (
     <>
-      <Navbar bg="light" expand="md" className="margin-down">
+      <Navbar bg="light" expand="sm" className="margin-down" fixed="bottom">
         <Container fluid>
           <Nav>
-            <Nav.Item className="navm-left-center">Gênero: </Nav.Item>
-            <div>
-              <NavDropdown
-                id="nav-dropdown"
-                title={generoSelecionado}
-                menuVariant="light"
-              >
-                {generos.map((genero, index) => (
-                  <NavDropdown.Item
-                    key={index}
-                    onClick={() => {
-                      setGeneroSelecionado(genero.nome)
-                      carregarLivros(genero.id)
-                    }}
-                  >
-                    {genero.nome}
-                  </NavDropdown.Item>
-                ))}
-              </NavDropdown>
-            </div>
-            <Nav.Item className="navm-left-center">Nome do livro: </Nav.Item>
-            <div className="margin-left">
-              <Form className="d-flex">
-                <Form.Control
-                  type="search"
-                  placeholder="Ex.: Sherlock Holmes: um estudo em vermelho"
-                  className="me-2"
-                  aria-label="Search"
-                />
-                <Button variant="outline-success">Pesquisar</Button>
-              </Form>
-            </div>
+            <Nav.Item className="nav-link">Gênero: </Nav.Item>
+            <NavDropdown
+              id="nav-dropdown"
+              title={generoSelecionado}
+              menuVariant="light"
+              autoClose="inside"
+            >
+              {generos.map((genero, index) => (
+                <NavDropdown.Item
+                  key={index}
+                  onClick={() => {
+                    setGeneroSelecionado(genero.nome);
+                    setIdGeneroSelecionado(genero.id);
+                    carregarLivros(genero.id);
+                  }}
+                >
+                  {genero.nome}
+                </NavDropdown.Item>
+              ))}
+            </NavDropdown>
+            <Nav.Item className="nav-link">Título do livro: </Nav.Item>
+            <Form className="flex-d">
+              <Form.Control
+                type="text"
+                placeholder="Ex.: Sherlock Holmes: um estudo em vermelho"
+                className="me-2"
+                defaultValue={""}
+                aria-label="Search"
+                name="title-book"
+                onChange={(event) => {
+                  handleOnChangeTitle(event);
+                }}
+              />
+            </Form>
           </Nav>
         </Container>
       </Navbar>

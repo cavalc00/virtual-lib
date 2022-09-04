@@ -27,7 +27,7 @@ public class LivroSpecification implements Specification<Livro> {
             predicates.add(criteriaBuilder.equal(root.get("generoLivro").get("id"), idGeneroLivro));
         }
 
-        if (Objects.nonNull(nomeLivro) && !nomeLivro.equals("")) {
+        if (Objects.nonNull(nomeLivro) && !nomeLivro.isBlank()) {
             StringBuilder sb = new StringBuilder(nomeLivro);
             sb.insert(0, '%');
             sb.append('%');
