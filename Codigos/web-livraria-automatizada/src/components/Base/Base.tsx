@@ -7,7 +7,7 @@ function Base() {
   return (
     <>
       <Container fluid>
-        <Header />
+        <Header/>
         <MainRoutes />
       </Container>
     </>

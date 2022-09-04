@@ -7,6 +7,7 @@ import {
   ProgressBar,
   Row,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import Livro from "../../models/Livro";
 import "./style.scss";
 
@@ -17,6 +18,8 @@ export type ContentCardProps = {
 };
 
 function CardBook(props: ContentCardProps) {
+  const navigate = useNavigate();
+
   return (
     <Col>
       {props.loading ? (
@@ -25,7 +28,7 @@ function CardBook(props: ContentCardProps) {
         <Row className="row-blocks">
           {props.livros?.map((book, index) => (
             <Card className="book-style">
-              <Card.Img variant="top" src={book.capa}/>
+              <Card.Img variant="top" src={book.capa} />
               <Card.Body className="ml-3">
                 <Card.Title className="title-style">{book.titulo}</Card.Title>
                 <ListGroup className="list-group-flush">
@@ -42,7 +45,12 @@ function CardBook(props: ContentCardProps) {
                   </ListGroup.Item>
                 </ListGroup>
                 <Card.Body className="button-style">
-                  <Button size="sm">Verificar disponibilidade</Button>
+                  <Button
+                    size="sm"
+                    onClick={() => navigate(`/info-book/${book.id}`)}
+                  >
+                    Verificar disponibilidade
+                  </Button>
                 </Card.Body>
               </Card.Body>
             </Card>
