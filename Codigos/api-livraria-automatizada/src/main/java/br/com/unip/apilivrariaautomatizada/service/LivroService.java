@@ -79,8 +79,8 @@ public class LivroService {
         return livroMapper.toLivroResponse(livro);
     }
 
-    public List<LivroResponse> mostrarTodosLivros(Long idGeneroLivro) {
-        var spec = Specification.where(new LivroSpecification(idGeneroLivro));
+    public List<LivroResponse> mostrarTodosLivros(Long idGeneroLivro, String nomeLivro) {
+        var spec = Specification.where(new LivroSpecification(idGeneroLivro, nomeLivro));
         List<Livro> livroList = livroRepository.findAll(spec);
         return livroMapper.toLivroResponseList(livroList);
     }

@@ -10,11 +10,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 public class LivroSpecification implements Specification<Livro> {
 
     private final Long idGeneroLivro;
+
+    private final String nomeLivro;
 
     @Override
     public Predicate toPredicate(Root<Livro> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -22,6 +25,14 @@ public class LivroSpecification implements Specification<Livro> {
 
         if (idGeneroLivro != null && !(idGeneroLivro.equals(GeneroEnum.TODOS.getId()))) {
             predicates.add(criteriaBuilder.equal(root.get("generoLivro").get("id"), idGeneroLivro));
+        }
+
+        if (Objects.nonNull(nomeLivro) && !nomeLivro.isBlank()) {
+            StringBuilder sb = new StringBuilder(nomeLivro);
+            sb.insert(0, '%');
+            sb.append('%');
+            System.out.println(sb.toString());
+            predicates.add(criteriaBuilder.like(root.get("titulo"), sb.toString()));
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

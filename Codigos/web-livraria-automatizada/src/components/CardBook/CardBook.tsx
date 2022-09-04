@@ -27,7 +27,7 @@ function CardBook(props: ContentCardProps) {
       ) : (
         <Row className="row-blocks">
           {props.livros?.map((book, index) => (
-            <Card className="book-style">
+            <Card className="book-style" key={index}>
               <Card.Img variant="top" src={book.capa} />
               <Card.Body className="ml-3">
                 <Card.Title className="title-style">{book.titulo}</Card.Title>
