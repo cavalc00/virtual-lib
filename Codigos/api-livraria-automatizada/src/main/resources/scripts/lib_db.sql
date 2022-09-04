@@ -44,7 +44,7 @@ CREATE TABLE Livro (
 	foreign key (IdGenero) references GeneroLivro(IdGenero),
 primary KEY(IdLivro)
 ) ENGINE=InnoDB;
-ALTER TABLE Livro MAX_ROWS=10;
+-- ALTER TABLE Livro MAX_ROWS=10;
 
 create table LocacaoLivro(
 	IdLocacao BIGINT auto_increment not null,
