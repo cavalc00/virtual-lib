@@ -51,7 +51,12 @@ function Home() {
   function handleOnChangeTitle(event: any) {
     setTituloSelecionado(event.target.value);
     carregarLivros(idGeneroSelecionado, tituloSelecionado);
-    // React.ChangeEvent<FormControlElement>
+  }
+
+  function clearFilters() {
+    setGeneroSelecionado("Todos");
+    setTituloSelecionado("");
+    carregarLivros();
   }
 
   function carregarLivros(id?: any, titulo?: any) {
@@ -105,7 +110,7 @@ function Home() {
                 type="text"
                 placeholder="Ex.: Sherlock Holmes: um estudo em vermelho"
                 className="me-2"
-                defaultValue={""}
+                value={tituloSelecionado}
                 aria-label="Search"
                 name="title-book"
                 onChange={(event) => {
@@ -114,6 +119,7 @@ function Home() {
               />
             </Form>
           </Nav>
+          <Button variant="outline-danger" onClick={() => {clearFilters()}}>Limpar filtros</Button>{' '}
         </Container>
       </Navbar>
 
