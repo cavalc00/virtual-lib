@@ -9,8 +9,8 @@ function MainRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/info-book/:id" element={<InfoBook />} />
       <Route path="/about" element={<About />} />
+      <Route path="/info-book/:id" element={<InfoBook />} />
     </Routes>
   );
 }
