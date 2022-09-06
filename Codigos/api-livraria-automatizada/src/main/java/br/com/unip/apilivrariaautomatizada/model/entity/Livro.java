@@ -37,7 +37,4 @@ public class Livro {
 
     @Column(name = "Resumo", columnDefinition = "TEXT")
     private String resumo;
-
-    @Column(name = "Capa")
-    private String capa;
 }

@@ -13,7 +13,7 @@ import "./style.scss";
 
 function Header() {
   return (
-    <Navbar bg="light" expand="md" className="margin-down">
+    <Navbar className="margin-down" bg="light" expand="sm" fixed="top">
       <Container fluid>
         <Navbar.Brand>Livraria automatizada</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

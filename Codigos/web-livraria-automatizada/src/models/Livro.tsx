@@ -1,3 +1,4 @@
+import { ByteLengthQueuingStrategy } from "node:stream/web";
 import GeneroLivro from "./GeneroLivro";
 
 type Livro = {
@@ -8,7 +9,7 @@ type Livro = {
     editora: string;
     anoLancamento: number;
     resumo: string;
-    capa: string;
+    capa: Int32Array;
 };
 
 export default Livro;

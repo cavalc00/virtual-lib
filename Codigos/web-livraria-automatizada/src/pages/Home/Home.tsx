@@ -1,5 +1,4 @@
-import { getValue } from "@testing-library/user-event/dist/utils";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -50,7 +49,7 @@ function Home() {
 
   function handleOnChangeTitle(event: any) {
     setTituloSelecionado(event.target.value);
-    carregarLivros(idGeneroSelecionado, tituloSelecionado);
+    carregarLivros(idGeneroSelecionado, event.target.value);
   }
 
   function clearFilters() {
@@ -59,7 +58,7 @@ function Home() {
     carregarLivros();
   }
 
-  function carregarLivros(id?: any, titulo?: any) {
+  async function carregarLivros(id?: any, titulo?: any) {
     LivroService.findAll(id, titulo)
       .then((response) => {
         setLivros(
@@ -81,29 +80,33 @@ function Home() {
 
   return (
     <>
-      <Navbar bg="light" expand="sm" className="margin-down" fixed="bottom">
+      <Navbar bg="light" expand="sm" fixed="bottom">
         <Container fluid>
           <Nav>
             <Nav.Item className="nav-link">Gênero: </Nav.Item>
             <NavDropdown
-              id="nav-dropdown"
+              key={"up"}
+              id={"dropdown-button-drop-up"}
+              drop={"up"}
               title={generoSelecionado}
-              menuVariant="light"
-              autoClose="inside"
             >
-              {generos.map((genero, index) => (
-                <NavDropdown.Item
-                  key={index}
-                  onClick={() => {
-                    setGeneroSelecionado(genero.nome);
-                    setIdGeneroSelecionado(genero.id);
-                    carregarLivros(genero.id);
-                  }}
-                >
-                  {genero.nome}
-                </NavDropdown.Item>
-              ))}
+              <div style={{ maxHeight: "200px", overflowY: "scroll" }}>
+                {generos.map((genero, index) => (
+                  <NavDropdown.Item
+                    key={index}
+                    onClick={() => {
+                      setGeneroSelecionado(genero.nome);
+                      setIdGeneroSelecionado(genero.id);
+                      carregarLivros(genero.id);
+                    }}
+                  >
+                    {genero.nome}
+                  </NavDropdown.Item>
+                ))}
+              </div>
             </NavDropdown>
+          </Nav>
+          <Nav>
             <Nav.Item className="nav-link">Título do livro: </Nav.Item>
             <Form className="flex-d">
               <Form.Control
@@ -119,7 +122,14 @@ function Home() {
               />
             </Form>
           </Nav>
-          <Button variant="outline-danger" onClick={() => {clearFilters()}}>Limpar filtros</Button>{' '}
+          <Button
+            variant="outline-danger"
+            onClick={() => {
+              clearFilters();
+            }}
+          >
+            Limpar filtros
+          </Button>
         </Container>
       </Navbar>
 

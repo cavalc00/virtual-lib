@@ -21,14 +21,14 @@ function CardBook(props: ContentCardProps) {
   const navigate = useNavigate();
 
   return (
-    <Col>
+    <Col className="fit-page">
       {props.loading ? (
         <ProgressBar animated now={100} />
       ) : (
         <Row className="row-blocks">
           {props.livros?.map((book, index) => (
             <Card className="book-style" key={index}>
-              <Card.Img variant="top" src={book.capa} />
+              <Card.Img variant="top" src={`data:image/jpeg;base64,${book.capa}`} />
               <Card.Body className="ml-3">
                 <Card.Title className="title-style">{book.titulo}</Card.Title>
                 <ListGroup className="list-group-flush">
