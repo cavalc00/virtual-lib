@@ -1,6 +1,7 @@
 package br.com.unip.apilivrariaautomatizada.service;
 
 import br.com.unip.apilivrariaautomatizada.mapper.LivroMapper;
+import br.com.unip.apilivrariaautomatizada.model.dto.ImageDTO;
 import br.com.unip.apilivrariaautomatizada.model.dto.LivroDTO;
 import br.com.unip.apilivrariaautomatizada.model.entity.GeneroLivro;
 import br.com.unip.apilivrariaautomatizada.model.entity.Livro;
@@ -14,12 +15,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class LivroService {
 
+    private final ImageService imageService;
     private final LivroRepository livroRepository;
     private final GeneroLivroRepository generoLivroRepository;
     private final LivroMapper livroMapper;
@@ -80,8 +86,23 @@ public class LivroService {
     }
 
     public List<LivroResponse> mostrarTodosLivros(Long idGeneroLivro, String nomeLivro) {
+
         var spec = Specification.where(new LivroSpecification(idGeneroLivro, nomeLivro));
-        List<Livro> livroList = livroRepository.findAll(spec);
-        return livroMapper.toLivroResponseList(livroList);
+        List<LivroResponse> response = livroMapper.toLivroResponseList(livroRepository.findAll(spec));
+        List<Long> idLivros = response.stream().map(LivroResponse::getId).collect(Collectors.toList());
+
+
+        try {
+            List<ImageDTO> imageDTOList = imageService.getImageById(idLivros);
+            for (LivroResponse livro : response) {
+                ImageDTO dto = imageDTOList.stream().filter(imageDTO -> imageDTO.getId().equals(livro.getId())).findAny().orElse(null);
+                livro.setCapa(dto.getImagem());
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+
+
+        return response;
     }
 }

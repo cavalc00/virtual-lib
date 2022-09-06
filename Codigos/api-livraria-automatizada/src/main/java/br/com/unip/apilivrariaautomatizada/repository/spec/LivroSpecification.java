@@ -28,11 +28,7 @@ public class LivroSpecification implements Specification<Livro> {
         }
 
         if (Objects.nonNull(nomeLivro) && !nomeLivro.isBlank()) {
-            StringBuilder sb = new StringBuilder(nomeLivro);
-            sb.insert(0, '%');
-            sb.append('%');
-            System.out.println(sb.toString());
-            predicates.add(criteriaBuilder.like(root.get("titulo"), sb.toString()));
+            predicates.add(criteriaBuilder.like(root.get("titulo"), "%" + nomeLivro + "%"));
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

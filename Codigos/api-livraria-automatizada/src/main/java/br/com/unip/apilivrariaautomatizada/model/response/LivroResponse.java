@@ -27,6 +27,5 @@ public class LivroResponse {
 
     private Integer anoLancamento;
 
-    private String capa;
-
+    private Blob capa;
 }
