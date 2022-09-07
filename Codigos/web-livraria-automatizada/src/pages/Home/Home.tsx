@@ -133,7 +133,7 @@ function Home() {
         </Container>
       </Navbar>
 
-      <CardBook livros={livros} errorRequest={false} loading={false} />
+      <CardBook livros={livros} errorRequest={false} loading={false} generos={generos}/>
     </>
   );
 }
