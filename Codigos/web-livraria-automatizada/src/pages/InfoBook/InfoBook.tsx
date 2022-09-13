@@ -22,7 +22,7 @@ function InfoBook() {
     <div className="teste">
       <p>{livro?.id}</p>
       <p>{livro?.titulo}</p>
-      <p> {livro?.generoLivro.nome}</p>
+      <p> {livro?.generoLivro?.nome}</p>
       <p> {livro?.autor}</p>
       <p> {livro?.editora}</p>
       <p> {livro?.resumo}</p>

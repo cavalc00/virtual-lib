@@ -38,8 +38,9 @@ CREATE TABLE Livro (
 	Resumo TEXT null,
 	Titulo VARCHAR(255) not null,
 	Autor VARCHAR(155) not null,
-	Editora VARCHAR(100) not null,
+	Editora VARCHAR(100) null,
 	Ano INT null,
+	FlagDisponivel BIT not null,
 	foreign key (IdGenero) references GeneroLivro(IdGenero),
 primary KEY(IdLivro)
 ) ENGINE=InnoDB;
@@ -63,10 +64,6 @@ INSERT INTO liv_db.generolivro (Nome) VALUES
 ('Conto'), ('Infantil'), ('Memórias e autobiografia'), ('Biografia'),
 ('Gastronomia'), ('Arte e Fotografia'), ('Autoajuda'), ('História'),
 ('Viagem'), ('Crimes Reais'), ('Humor'), ('Religião e Espiritualidade'),
-('Humanidades e Ciências Sociais'), ('Tecnologia e Ciência'), ('Todos');
+('Humanidades e Ciências Sociais'), ('Tecnologia e Ciência');
 
 INSERT INTO liv_db.perfil (Tipo) VALUES ('Admin'), ('User');
-
-
-
-

@@ -20,7 +20,7 @@ function Home() {
   const [generoSelecionado, setGeneroSelecionado] = useState<string>("Todos");
   const [idGeneroSelecionado, setIdGeneroSelecionado] = useState<any>();
   const [tituloSelecionado, setTituloSelecionado] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     carregarLivros();
@@ -54,6 +54,7 @@ function Home() {
 
   function clearFilters() {
     setGeneroSelecionado("Todos");
+    setIdGeneroSelecionado(undefined);
     setTituloSelecionado("");
     carregarLivros();
   }
@@ -61,18 +62,8 @@ function Home() {
   async function carregarLivros(id?: any, titulo?: any) {
     LivroService.findAll(id, titulo)
       .then((response) => {
-        setLivros(
-          response.data.sort((a, b) => {
-            if (a.titulo > b.titulo) {
-              return 1;
-            }
-            if (a.titulo < b.titulo) {
-              return -1;
-            }
-            return 0;
-          })
-        );
         setLoading(true);
+        setLivros(response.data);
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
@@ -133,7 +124,13 @@ function Home() {
         </Container>
       </Navbar>
 
-      <CardBook livros={livros} errorRequest={false} loading={false} generos={generos}/>
+      <CardBook
+        livros={livros}
+        errorRequest={false}
+        loading={loading}
+        generos={generos}
+        onRefresh={carregarLivros}
+      />
     </>
   );
 }

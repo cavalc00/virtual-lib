@@ -7,7 +7,7 @@ function findAll(idGeneroLivro?: any, tituloLivro?: string) {
     myParams.append("idGeneroLivro", idGeneroLivro);
   }
 
-  if(tituloLivro && tituloLivro != " "){
+  if (tituloLivro && tituloLivro != " ") {
     myParams.append("nomeLivro", tituloLivro);
   }
 
@@ -22,6 +22,11 @@ function findById(idLivro: any) {
   return api.get<Livro>(`/livro/${idLivro}`);
 }
 
-const LivroService = { findAll, findById };
+function updateBook(book: Livro) {
+  console.log(book);
+  return api.patch(`/livro`, book);
+}
+
+const LivroService = { findAll, findById, updateBook };
 
 export default LivroService;

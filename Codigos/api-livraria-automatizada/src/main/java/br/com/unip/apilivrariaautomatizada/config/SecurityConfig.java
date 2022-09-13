@@ -30,14 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override //Para configurar autorização
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/livro").permitAll()
-                .antMatchers(HttpMethod.GET, "/livro/*").permitAll()
-                .antMatchers(HttpMethod.GET, "/genero").permitAll()
-                .anyRequest().authenticated()
-                .and().formLogin()
-                .and()
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authorizeRequests().anyRequest().permitAll().and()
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf().disable();
     }
 
     public static void main(String[] args) {
