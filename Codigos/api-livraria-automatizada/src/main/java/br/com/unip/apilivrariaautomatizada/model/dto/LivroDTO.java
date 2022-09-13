@@ -1,9 +1,15 @@
 package br.com.unip.apilivrariaautomatizada.model.dto;
 
+import br.com.unip.apilivrariaautomatizada.model.entity.GeneroLivro;
+import br.com.unip.apilivrariaautomatizada.model.enums.GeneroEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.sql.Blob;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,9 +17,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LivroDTO {
 
+    private Long id;
+
     private String titulo;
 
-    private Long generoLivroId;
+    private GeneroLivroDTO generoLivro;
 
     private String resumo;
 
@@ -22,4 +30,8 @@ public class LivroDTO {
     private String editora;
 
     private Integer anoLancamento;
+
+    private Boolean flagDisponivel;
+
+    private String capa;
 }

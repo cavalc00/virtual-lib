@@ -2,14 +2,15 @@ import { ByteLengthQueuingStrategy } from "node:stream/web";
 import GeneroLivro from "./GeneroLivro";
 
 type Livro = {
-    id: number;
-    generoLivro: GeneroLivro;
-    titulo: string;
-    autor: string;
-    editora: string;
-    anoLancamento: number;
-    resumo: string;
-    capa: Int32Array;
+  id?: any;
+  generoLivro: GeneroLivro | undefined;
+  titulo: string | undefined;
+  autor: string | undefined;
+  editora?: string | undefined;
+  anoLancamento?: number;
+  resumo?: string | undefined;
+  capa?: any | undefined;
+  flagDisponivel: boolean;
 };
 
 export default Livro;

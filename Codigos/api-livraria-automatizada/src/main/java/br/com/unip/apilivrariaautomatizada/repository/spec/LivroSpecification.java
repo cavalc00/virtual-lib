@@ -23,7 +23,7 @@ public class LivroSpecification implements Specification<Livro> {
     public Predicate toPredicate(Root<Livro> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         var predicates = new ArrayList<Predicate>();
 
-        if (idGeneroLivro != null && !(idGeneroLivro.equals(GeneroEnum.TODOS.getId()))) {
+        if (idGeneroLivro != null) {
             predicates.add(criteriaBuilder.equal(root.get("generoLivro").get("id"), idGeneroLivro));
         }
 

@@ -5,8 +5,10 @@ import br.com.unip.apilivrariaautomatizada.model.response.LivroResponse;
 import br.com.unip.apilivrariaautomatizada.service.LivroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,9 +26,9 @@ public class LivroController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> atualizarLivro(@PathVariable("id") Long id, @RequestBody LivroDTO request) {
-        livroService.atualizarLivro(id, request);
+    @PatchMapping
+    public ResponseEntity<Void> atualizarLivro(@RequestBody LivroDTO request) {
+        livroService.atualizarLivro(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

@@ -32,8 +32,7 @@ public enum GeneroEnum {
     HUMOR(23L),
     RELIGIAO_E_ESPIRITUALIDADE(24L),
     HUMANIDADES_E_CIENCIAS_SOCIAIS(25L),
-    TECNOLOGIA_E_CIENCIA(26L),
-    TODOS(27L);
+    TECNOLOGIA_E_CIENCIA(26L);
 
     private final Long id;
 }

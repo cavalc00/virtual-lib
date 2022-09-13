@@ -1,5 +1,6 @@
 package br.com.unip.apilivrariaautomatizada.model.entity;
 
+import br.com.unip.apilivrariaautomatizada.model.enums.GeneroEnum;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,4 +38,7 @@ public class Livro {
 
     @Column(name = "Resumo", columnDefinition = "TEXT")
     private String resumo;
+
+    @Column(name = "FlagDisponivel")
+    private Boolean flagDisponivel;
 }

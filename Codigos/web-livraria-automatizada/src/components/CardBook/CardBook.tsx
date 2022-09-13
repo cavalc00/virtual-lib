@@ -23,7 +23,8 @@ export type ContentCardProps = {
   livros?: Livro[];
   generos?: GeneroLivro[];
   errorRequest: boolean;
-  loading: boolean;
+  loading: boolean | undefined;
+  onRefresh: () => (void);
 };
 
 function CardBook(props: ContentCardProps) {
@@ -46,7 +47,7 @@ function CardBook(props: ContentCardProps) {
     <>
       <Col className="fit-page">
         {props.loading ? (
-          <ProgressBar animated now={100} />
+          <ProgressBar animated now={90} />
         ) : (
           <Row className="row-blocks">
             {props.livros?.map((book, index) => (
@@ -63,7 +64,7 @@ function CardBook(props: ContentCardProps) {
                   <ListGroup className="list-group-flush">
                     <ListGroup.Item>
                       <label className="label-style">Gênero:</label>{" "}
-                      {book.generoLivro.nome}
+                      {book.generoLivro?.nome}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <label className="label-style">Autor:</label> {book.autor}
@@ -107,6 +108,7 @@ function CardBook(props: ContentCardProps) {
         showEditBookModal={showEditBookModal}
         setShowEditBookModal={setShowEditBookModal}
         generos={props.generos}
+        onRefresh={props.onRefresh}
       />
       <DeleteBookModal
         selectedBook={selectedBook}
