@@ -23,10 +23,13 @@ function findById(idLivro: any) {
 }
 
 function updateBook(book: Livro) {
-  console.log(book);
   return api.patch(`/livro`, book);
 }
 
-const LivroService = { findAll, findById, updateBook };
+function deleteBook(idLivro: any){
+  return api.delete(`/livro/${idLivro}`);
+}
+
+const LivroService = { findAll, findById, updateBook, deleteBook };
 
 export default LivroService;

@@ -3,6 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import Livro from "../../../models/Livro";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LivroService from "../../../services/LivroService";
 
 type DeleteBookModalProps = {
   showDeleteBookModal: boolean | undefined;
@@ -10,9 +11,20 @@ type DeleteBookModalProps = {
     React.SetStateAction<boolean | undefined>
   >;
   selectedBook: Livro | undefined;
+  onRefresh: () => void;
 };
 
 function DeleteBookModal(props: DeleteBookModalProps) {
+  function deleteBook(idLivro: any) {
+    LivroService.deleteBook(idLivro)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error))
+      .finally(() => {
+        props.setShowDeleteBookModal(false);
+        props.onRefresh();
+      });
+  }
+
   return (
     <Modal show={props.showDeleteBookModal}>
       <Modal.Header closeButton>
@@ -31,7 +43,7 @@ function DeleteBookModal(props: DeleteBookModalProps) {
         </Button>
         <Button
           variant="success"
-          onClick={() => props.setShowDeleteBookModal(false)}
+          onClick={() => deleteBook(props.selectedBook?.id)}
         >
           <FontAwesomeIcon icon={faCheck} />
         </Button>
