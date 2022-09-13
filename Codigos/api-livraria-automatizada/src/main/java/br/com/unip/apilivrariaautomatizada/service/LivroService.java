@@ -2,7 +2,7 @@ package br.com.unip.apilivrariaautomatizada.service;
 
 import br.com.unip.apilivrariaautomatizada.mapper.LivroMapper;
 import br.com.unip.apilivrariaautomatizada.model.dto.ImageDTO;
-import br.com.unip.apilivrariaautomatizada.model.dto.LivroDTO;
+import br.com.unip.apilivrariaautomatizada.model.dto.LivroUpdateDTO;
 import br.com.unip.apilivrariaautomatizada.model.entity.GeneroLivro;
 import br.com.unip.apilivrariaautomatizada.model.entity.Livro;
 import br.com.unip.apilivrariaautomatizada.model.response.LivroResponse;
@@ -27,7 +27,7 @@ public class LivroService {
     private final GeneroLivroRepository generoLivroRepository;
     private final LivroMapper livroMapper;
 
-    public void criarLivro(LivroDTO request) {
+    public void criarLivro(LivroUpdateDTO request) {
 
 //        GeneroLivro generoLivro = generoLivroRepository.findById(request).orElseThrow(
 //                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
@@ -49,7 +49,7 @@ public class LivroService {
 //        }
     }
 
-    public void atualizarLivro(LivroDTO request) {
+    public void atualizarLivro(LivroUpdateDTO request) {
         Livro livro = livroRepository.findById(request.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
         );

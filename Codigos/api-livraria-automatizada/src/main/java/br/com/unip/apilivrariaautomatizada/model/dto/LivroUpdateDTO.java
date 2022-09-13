@@ -1,22 +1,19 @@
 package br.com.unip.apilivrariaautomatizada.model.dto;
 
-import br.com.unip.apilivrariaautomatizada.model.entity.GeneroLivro;
-import br.com.unip.apilivrariaautomatizada.model.enums.GeneroEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.sql.Blob;
+import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class LivroDTO {
+public class LivroUpdateDTO {
 
+    @NotBlank
     private Long id;
 
     private String titulo;
