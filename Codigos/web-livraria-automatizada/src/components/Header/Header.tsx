@@ -24,7 +24,7 @@ function Header() {
             navbarScroll
           >
             <Nav.Link href="/">Lista de livros</Nav.Link>
-            <Nav.Link href="about">Sobre</Nav.Link>
+            <Nav.Link href="/about">Sobre</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

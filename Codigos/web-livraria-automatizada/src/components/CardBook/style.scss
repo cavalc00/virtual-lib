@@ -1,33 +1,43 @@
 .book-style {
-    width: 350px;  
-    margin: 10px;
+  width: 350px;
+  margin: 10px;
+  text-align: center;
 }
 
 .title-style {
-    text-align: center;
+  text-align: center;
 }
 
 .button-style {
-    display:  flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.label-style {
-    text-orientation: initial;
+.label-style{
+    margin-right: 10px;
+    font-weight: bold;
 }
 
-.fit-page{
-    margin-top: 60px;
-    margin-bottom: 150px;
+.listItem {
+  display: flex;
+  justify-content: flex-start;
 }
 
-.image-format{
-    padding: 10px;
-    height: 500px;
+.fit-page {
+  display: block;
+  align-items: center;
+  margin-top: 60px;
+  margin-bottom: 150px;
 }
 
-.edit-buttons-style{
-    display: flex;
-    justify-content: center;
+.image-format {
+  padding: 10px;
+  height: 400px;
+  width: 300px;
+}
+
+.edit-buttons-style {
+  display: flex;
+  justify-content: center;
 }

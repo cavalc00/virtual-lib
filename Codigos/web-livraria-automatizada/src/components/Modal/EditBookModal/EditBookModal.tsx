@@ -75,7 +75,7 @@ function EditBookModal(props: EditBookModalProps) {
       base64String = await convertBlobToBase64(imageBook);
     }
 
-    if(Number(anoLivro) == 0) setAnoLivro(undefined);
+    if (Number(anoLivro) == 0) setAnoLivro(undefined);
 
     const book: Livro = {
       id: props.selectedBook?.id,
@@ -175,7 +175,6 @@ function EditBookModal(props: EditBookModalProps) {
               }}
             />
           </Form.Group>
-
           <Form.Group className="mb-3">
             <Form.Label>Editora do Livro</Form.Label>
             <Form.Control
@@ -187,7 +186,6 @@ function EditBookModal(props: EditBookModalProps) {
               }}
             />
           </Form.Group>
-
           <Form.Group className="mb-3">
             <Form.Label>Resumo do Livro</Form.Label>
             <Form.Control
@@ -227,12 +225,12 @@ function EditBookModal(props: EditBookModalProps) {
         </Modal.Body>
         <Modal.Footer>
           <Button
+            type="submit"
             onClick={() => {
               editBook();
               setDisableButton(true);
             }}
             disabled={disableButton}
-            type="submit"
           >
             {loading ? <Spinner animation={"border"} /> : "Salvar"}
           </Button>

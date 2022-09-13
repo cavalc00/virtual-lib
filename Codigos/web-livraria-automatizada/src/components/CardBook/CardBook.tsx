@@ -24,7 +24,7 @@ export type ContentCardProps = {
   generos?: GeneroLivro[];
   errorRequest: boolean;
   loading: boolean | undefined;
-  onRefresh: () => (void);
+  onRefresh: () => void;
 };
 
 function CardBook(props: ContentCardProps) {
@@ -62,16 +62,14 @@ function CardBook(props: ContentCardProps) {
                 <Card.Body className="ml-3">
                   <Card.Title className="title-style">{book.titulo}</Card.Title>
                   <ListGroup className="list-group-flush">
-                    <ListGroup.Item>
-                      <label className="label-style">Gênero:</label>{" "}
-                      {book.generoLivro?.nome}
+                    <ListGroup.Item className="listItem">
+                      <label className="label-style">Gênero:</label> {book.generoLivro?.nome}
                     </ListGroup.Item>
-                    <ListGroup.Item>
+                    <ListGroup.Item className="listItem">
                       <label className="label-style">Autor:</label> {book.autor}
                     </ListGroup.Item>
-                    <ListGroup.Item>
-                      <label className="label-style">Ano de lançamento:</label>{" "}
-                      {book.anoLancamento}
+                    <ListGroup.Item className="listItem">
+                      <label className="label-style">Ano de lançamento:</label> {book.anoLancamento}
                     </ListGroup.Item>
                   </ListGroup>
                   <Card.Body className="button-style">
@@ -114,6 +112,7 @@ function CardBook(props: ContentCardProps) {
         selectedBook={selectedBook}
         setShowDeleteBookModal={setShowDeleteEditBookModal}
         showDeleteBookModal={showDeleteBookModal}
+        onRefresh={props.onRefresh}
       />
     </>
   );

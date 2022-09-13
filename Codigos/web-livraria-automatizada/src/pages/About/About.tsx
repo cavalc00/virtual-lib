@@ -1,10 +1,8 @@
 import React from "react";
-import './style.scss';
+import "./style.scss";
 
-function About(){
-    return(
-        <h1>Pagina About</h1>
-    );
+function About() {
+  return <h1 style={{marginTop: "30px"}}>Pagina About</h1>;
 }
 
 export default About;

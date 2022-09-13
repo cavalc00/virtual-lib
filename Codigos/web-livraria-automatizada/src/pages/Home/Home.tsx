@@ -94,6 +94,15 @@ function Home() {
                     {genero.nome}
                   </NavDropdown.Item>
                 ))}
+                <NavDropdown.Item
+                  onClick={() => {
+                    setGeneroSelecionado("Todos");
+                    setIdGeneroSelecionado(undefined);
+                    carregarLivros();
+                  }}
+                >
+                  Todos
+                </NavDropdown.Item>
               </div>
             </NavDropdown>
           </Nav>
