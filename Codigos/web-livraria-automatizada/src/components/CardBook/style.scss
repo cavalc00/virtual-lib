@@ -1,5 +1,5 @@
 .book-style {
-  width: 350px;
+  width: 330px;
   margin: 10px;
   text-align: center;
 }
@@ -10,9 +10,13 @@
 
 .button-style {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: right;
 }
+
+.edit-button-style {
+    display: flex;
+    justify-content: start;
+  }
 
 .label-style{
     margin-right: 10px;
@@ -39,5 +43,5 @@
 
 .edit-buttons-style {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }

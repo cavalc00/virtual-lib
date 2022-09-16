@@ -1,6 +1,6 @@
 package br.com.unip.apilivrariaautomatizada.controller;
 
-import br.com.unip.apilivrariaautomatizada.model.dto.LivroUpdateDTO;
+import br.com.unip.apilivrariaautomatizada.model.request.LivroUpdateRequest;
 import br.com.unip.apilivrariaautomatizada.model.response.LivroResponse;
 import br.com.unip.apilivrariaautomatizada.service.LivroService;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +19,13 @@ public class LivroController {
     private final LivroService livroService;
 
     @PostMapping
-    public ResponseEntity<Void> criarLivro(@RequestBody LivroUpdateDTO request) {
+    public ResponseEntity<Void> criarLivro(@RequestBody LivroUpdateRequest request) {
         livroService.criarLivro(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PatchMapping
-    public ResponseEntity<Void> atualizarLivro(@Valid @RequestBody LivroUpdateDTO request) {
+    public ResponseEntity<Void> atualizarLivro(@Valid @RequestBody LivroUpdateRequest request) {
         livroService.atualizarLivro(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

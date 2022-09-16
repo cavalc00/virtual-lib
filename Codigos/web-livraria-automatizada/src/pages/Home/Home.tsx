@@ -1,3 +1,5 @@
+import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -6,8 +8,10 @@ import {
   Nav,
   Navbar,
   NavDropdown,
+  Row,
 } from "react-bootstrap";
 import CardBook from "../../components/CardBook/CardBook";
+import CreateBookModal from "../../components/Modal/CreateBookModal/CreateBookModal";
 import GeneroLivro from "../../models/GeneroLivro";
 import Livro from "../../models/Livro";
 import GeneroService from "../../services/GeneroService";
@@ -21,6 +25,8 @@ function Home() {
   const [idGeneroSelecionado, setIdGeneroSelecionado] = useState<any>();
   const [tituloSelecionado, setTituloSelecionado] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  const [showCreateBookModal, setShowCreateBookModal] =
+    useState<boolean>(false);
 
   useEffect(() => {
     carregarLivros();
@@ -122,21 +128,39 @@ function Home() {
               />
             </Form>
           </Nav>
-          <Button
-            variant="outline-danger"
-            onClick={() => {
-              clearFilters();
-            }}
-          >
-            Limpar filtros
-          </Button>
+          <Nav>
+            <Button
+              variant="outline-success"
+              className="new-book-button"
+              onClick={() => {
+                setShowCreateBookModal(true);
+              }}
+            >
+              <FontAwesomeIcon icon={faSquarePlus} />
+            </Button>
+            <Button
+              variant="outline-danger"
+              onClick={() => {
+                clearFilters();
+              }}
+            >
+              Limpar filtros
+            </Button>
+          </Nav>
         </Container>
       </Navbar>
-
-      <CardBook
-        livros={livros}
-        errorRequest={false}
-        loading={loading}
+      <div className="center-books">
+        <CardBook
+          livros={livros}
+          errorRequest={false}
+          loading={loading}
+          generos={generos}
+          onRefresh={carregarLivros}
+        />
+      </div>
+      <CreateBookModal
+        showCreateBookModal={showCreateBookModal}
+        setShowCreateBookModal={setShowCreateBookModal}
         generos={generos}
         onRefresh={carregarLivros}
       />

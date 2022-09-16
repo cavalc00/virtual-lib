@@ -2,7 +2,7 @@ package br.com.unip.apilivrariaautomatizada.service;
 
 import br.com.unip.apilivrariaautomatizada.mapper.LivroMapper;
 import br.com.unip.apilivrariaautomatizada.model.dto.ImageDTO;
-import br.com.unip.apilivrariaautomatizada.model.dto.LivroUpdateDTO;
+import br.com.unip.apilivrariaautomatizada.model.request.LivroUpdateRequest;
 import br.com.unip.apilivrariaautomatizada.model.entity.GeneroLivro;
 import br.com.unip.apilivrariaautomatizada.model.entity.Livro;
 import br.com.unip.apilivrariaautomatizada.model.response.LivroResponse;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class LivroService {
     private final GeneroLivroRepository generoLivroRepository;
     private final LivroMapper livroMapper;
 
-    public void criarLivro(LivroUpdateDTO request) {
+    public void criarLivro(LivroUpdateRequest request) {
 
 //        GeneroLivro generoLivro = generoLivroRepository.findById(request).orElseThrow(
 //                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
@@ -49,7 +48,7 @@ public class LivroService {
 //        }
     }
 
-    public void atualizarLivro(LivroUpdateDTO request) {
+    public void atualizarLivro(LivroUpdateRequest request) {
         Livro livro = livroRepository.findById(request.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
         );
@@ -98,7 +97,6 @@ public class LivroService {
 
         var spec = Specification.where(new LivroSpecification(idGeneroLivro, nomeLivro));
         List<LivroResponse> response = livroMapper.toLivroResponseList(livroRepository.findAll(spec));
-        List<Long> idLivros = response.stream().map(LivroResponse::getId).collect(Collectors.toList());
 
         try {
             List<ImageDTO> imageDTOList = imageService.getAllImages();

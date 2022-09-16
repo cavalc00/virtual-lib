@@ -1,19 +1,20 @@
-package br.com.unip.apilivrariaautomatizada.model.dto;
+package br.com.unip.apilivrariaautomatizada.model.request;
 
+import br.com.unip.apilivrariaautomatizada.model.dto.GeneroLivroDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class LivroUpdateDTO {
+public class LivroUpdateRequest {
 
-    @NotBlank
+    @NotNull
     private Long id;
 
     private String titulo;
