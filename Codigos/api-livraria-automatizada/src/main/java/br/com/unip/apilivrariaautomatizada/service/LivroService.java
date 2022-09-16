@@ -2,7 +2,8 @@ package br.com.unip.apilivrariaautomatizada.service;
 
 import br.com.unip.apilivrariaautomatizada.mapper.LivroMapper;
 import br.com.unip.apilivrariaautomatizada.model.dto.ImageDTO;
-import br.com.unip.apilivrariaautomatizada.model.dto.LivroUpdateDTO;
+import br.com.unip.apilivrariaautomatizada.model.request.LivroCreateRequest;
+import br.com.unip.apilivrariaautomatizada.model.request.LivroUpdateRequest;
 import br.com.unip.apilivrariaautomatizada.model.entity.GeneroLivro;
 import br.com.unip.apilivrariaautomatizada.model.entity.Livro;
 import br.com.unip.apilivrariaautomatizada.model.response.LivroResponse;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,29 +27,34 @@ public class LivroService {
     private final GeneroLivroRepository generoLivroRepository;
     private final LivroMapper livroMapper;
 
-    public void criarLivro(LivroUpdateDTO request) {
+    public void criarLivro(LivroCreateRequest request) {
+        GeneroLivro generoLivro = generoLivroRepository.findById(request.getGeneroLivro().getId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
+        );
 
-//        GeneroLivro generoLivro = generoLivroRepository.findById(request).orElseThrow(
-//                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
-//        );
-//
-//        try {
-//            Livro livro = Livro.builder()
-//                    .titulo(request.getTitulo())
-//                    .generoLivro(generoLivro.getId())
-//                    .resumo(request.getResumo())
-//                    .autor(request.getAutor())
-//                    .anoLancamento(request.getAnoLancamento())
-//                    .editora(request.getEditora())
-//                    .build();
-//
-//            livroRepository.save(livro);
-//        } catch (Exception e) {
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-//        }
+        try {
+            Livro livro = Livro.builder()
+                    .titulo(request.getTitulo())
+                    .generoLivro(generoLivro)
+                    .resumo(request.getResumo())
+                    .autor(request.getAutor())
+                    .flagDisponivel(request.getFlagDisponivel())
+                    .anoLancamento(request.getAnoLancamento())
+                    .editora(request.getEditora())
+                    .build();
+
+            Livro novoLivro = livroRepository.save(livro);
+
+            if (request.getCapa() != null && request.getCapa().length() > 0) {
+                imageService.UpdateOrSaveImageFromBase64(novoLivro.getId(), request.getCapa());
+            }
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
-    public void atualizarLivro(LivroUpdateDTO request) {
+    public void atualizarLivro(LivroUpdateRequest request) {
         Livro livro = livroRepository.findById(request.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
         );
@@ -98,7 +103,6 @@ public class LivroService {
 
         var spec = Specification.where(new LivroSpecification(idGeneroLivro, nomeLivro));
         List<LivroResponse> response = livroMapper.toLivroResponseList(livroRepository.findAll(spec));
-        List<Long> idLivros = response.stream().map(LivroResponse::getId).collect(Collectors.toList());
 
         try {
             List<ImageDTO> imageDTOList = imageService.getAllImages();

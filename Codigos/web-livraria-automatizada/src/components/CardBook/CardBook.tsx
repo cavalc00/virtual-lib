@@ -18,6 +18,7 @@ import GeneroLivro from "../../models/GeneroLivro";
 import GeneroService from "../../services/GeneroService";
 import EditBookModal from "../Modal/EditBookModal/EditBookModal";
 import DeleteBookModal from "../Modal/DeleteBookModal/DeleteBookModal";
+import CreateBookModal from "../Modal/CreateBookModal/CreateBookModal";
 
 export type ContentCardProps = {
   livros?: Livro[];
@@ -63,37 +64,39 @@ function CardBook(props: ContentCardProps) {
                   <Card.Title className="title-style">{book.titulo}</Card.Title>
                   <ListGroup className="list-group-flush">
                     <ListGroup.Item className="listItem">
-                      <label className="label-style">Gênero:</label> {book.generoLivro?.nome}
+                      <label className="label-style">Gênero:</label>{" "}
+                      {book.generoLivro?.nome}
                     </ListGroup.Item>
                     <ListGroup.Item className="listItem">
                       <label className="label-style">Autor:</label> {book.autor}
                     </ListGroup.Item>
                     <ListGroup.Item className="listItem">
-                      <label className="label-style">Ano de lançamento:</label> {book.anoLancamento}
+                      <label className="label-style">Ano de lançamento:</label>{" "}
+                      {book.anoLancamento}
                     </ListGroup.Item>
                   </ListGroup>
-                  <Card.Body className="button-style">
-                    <Button
-                      size="sm"
-                      onClick={() => navigate(`/info-book/${book.id}`)}
-                    >
-                      Verificar disponibilidade
-                    </Button>
-                  </Card.Body>
-
                   <div className="edit-buttons-style">
-                    <Button size="sm" onClick={() => openEditBookModal(book)}>
-                      <FontAwesomeIcon icon={faPencil} />
-                    </Button>
-
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => openDeleteBookModal(book)}
-                    >
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </Button>
+                    <Card.Body className="edit-button-style">
+                      <Button size="sm" onClick={() => openEditBookModal(book)}>
+                        <FontAwesomeIcon icon={faPencil} />
+                      </Button>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        style={{ marginLeft: "10px" }}
+                        onClick={() => openDeleteBookModal(book)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </Button>
+                    </Card.Body>
+                    <Card.Body className="button-style">
+                      <Button
+                        size="sm"
+                        onClick={() => navigate(`/info-book/${book.id}`)}
+                      >
+                        Mais Detalhes
+                      </Button>
+                    </Card.Body>
                   </div>
                 </Card.Body>
               </Card>

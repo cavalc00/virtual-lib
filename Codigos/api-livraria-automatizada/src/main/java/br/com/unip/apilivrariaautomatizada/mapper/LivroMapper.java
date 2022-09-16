@@ -1,6 +1,6 @@
 package br.com.unip.apilivrariaautomatizada.mapper;
 
-import br.com.unip.apilivrariaautomatizada.model.dto.LivroUpdateDTO;
+import br.com.unip.apilivrariaautomatizada.model.request.LivroUpdateRequest;
 import br.com.unip.apilivrariaautomatizada.model.entity.Livro;
 import br.com.unip.apilivrariaautomatizada.model.response.LivroResponse;
 import org.mapstruct.Mapper;
@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface LivroMapper {
 
-    void toLivro(@MappingTarget Livro target, LivroUpdateDTO source);
+    void toLivro(@MappingTarget Livro target, LivroUpdateRequest source);
 
     LivroResponse toLivroResponse(Livro source);
 

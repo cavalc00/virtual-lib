@@ -1,19 +1,16 @@
+import { faPlus, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Modal, Form, Button, FormGroup, Card, Spinner } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Card, Form, Modal, Spinner } from "react-bootstrap";
 import GeneroLivro from "../../../models/GeneroLivro";
 import Livro from "../../../models/Livro";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import "./style.scss";
 import LivroService from "../../../services/LivroService";
+import "./style.scss";
 
-type EditBookModalProps = {
-  showEditBookModal: boolean | undefined;
-  setShowEditBookModal: React.Dispatch<
-    React.SetStateAction<boolean | undefined>
-  >;
-  selectedBook: Livro | undefined;
-  generos?: GeneroLivro[];
+type CreateBookModalProps = {
+  generos: GeneroLivro[];
+  showCreateBookModal: boolean;
+  setShowCreateBookModal: React.Dispatch<React.SetStateAction<boolean>>;
   onRefresh: () => void;
 };
 
@@ -27,7 +24,7 @@ const convertBlobToBase64 = (blob: Blob) =>
     reader.readAsDataURL(blob);
   });
 
-function EditBookModal(props: EditBookModalProps) {
+function CreateBookModal(props: CreateBookModalProps) {
   const [disableButton, setDisableButton] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [tituloLivro, setTituloLivro] = useState<string>();
@@ -74,7 +71,7 @@ function EditBookModal(props: EditBookModalProps) {
     );
   }
 
-  async function editBook() {
+  async function saveBook() {
     setLoading(true);
     let base64String: any;
 
@@ -85,7 +82,6 @@ function EditBookModal(props: EditBookModalProps) {
     if (Number(anoLivro) == 0) setAnoLivro(undefined);
 
     const book: Livro = {
-      id: props.selectedBook?.id,
       titulo: tituloLivro,
       autor: autorLivro,
       editora: editoraLivro,
@@ -96,9 +92,9 @@ function EditBookModal(props: EditBookModalProps) {
       generoLivro: props.generos?.find((genero) => genero.nome == generoLivro),
     };
 
-    LivroService.updateBook(book)
+    LivroService.saveBook(book)
       .then((response) => {
-        props.setShowEditBookModal(false);
+        props.setShowCreateBookModal(false);
         console.log(response.data);
       })
       .catch((error) => console.log(error))
@@ -106,6 +102,7 @@ function EditBookModal(props: EditBookModalProps) {
         props.onRefresh();
         setLoading(false);
       });
+
   }
 
   return (
@@ -114,18 +111,18 @@ function EditBookModal(props: EditBookModalProps) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      show={props.showEditBookModal}
+      show={props.showCreateBookModal}
     >
       <Form validated>
         <Modal.Header
           closeButton
           onClick={() => {
-            props.setShowEditBookModal(false);
+            props.setShowCreateBookModal(false);
             setImageBook(undefined);
           }}
         >
           <Modal.Title id="contained-modal-title-vcenter">
-            Editar Livro
+            Adicionar Livro
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -135,7 +132,6 @@ function EditBookModal(props: EditBookModalProps) {
               required
               className="form-control"
               placeholder="Titulo Livro"
-              defaultValue={props.selectedBook?.titulo}
               onChange={(event) => {
                 setDisableButton(false);
                 setTituloLivro(event.target.value);
@@ -145,7 +141,6 @@ function EditBookModal(props: EditBookModalProps) {
           <Form.Group className="mb-3">
             <Form.Label>Gênero</Form.Label>
             <Form.Select
-              defaultValue={props.selectedBook?.generoLivro?.nome}
               required
               onChange={(event) => {
                 setDisableButton(false);
@@ -163,7 +158,6 @@ function EditBookModal(props: EditBookModalProps) {
             <Form.Control
               required
               placeholder="Autor do Livro"
-              defaultValue={props.selectedBook?.autor}
               onChange={(event) => {
                 setDisableButton(false);
                 setAutorLivro(event.target.value);
@@ -174,9 +168,9 @@ function EditBookModal(props: EditBookModalProps) {
           <Form.Group className="mb-3">
             <Form.Label>Ano da Publicação</Form.Label>
             <Form.Control
+              required
               type="number"
               placeholder="Publicação do Livro"
-              defaultValue={props.selectedBook?.anoLancamento}
               onChange={(event) => {
                 setDisableButton(false);
                 setAnoLivro(event.target.value);
@@ -187,7 +181,6 @@ function EditBookModal(props: EditBookModalProps) {
             <Form.Label>Editora do Livro</Form.Label>
             <Form.Control
               placeholder="Editora do Livro"
-              defaultValue={props.selectedBook?.editora}
               onChange={(event) => {
                 setDisableButton(false);
                 setEditoraLivro(event.target.value);
@@ -200,7 +193,6 @@ function EditBookModal(props: EditBookModalProps) {
               as="textarea"
               rows={5}
               placeholder="Resumo do Livro"
-              defaultValue={props.selectedBook?.resumo}
               onChange={(event) => {
                 setDisableButton(false);
                 setResumoLivro(event.target.value);
@@ -235,7 +227,7 @@ function EditBookModal(props: EditBookModalProps) {
           <Button
             type="submit"
             onClick={() => {
-              editBook();
+              saveBook();
               setDisableButton(true);
             }}
             disabled={disableButton}
@@ -244,7 +236,7 @@ function EditBookModal(props: EditBookModalProps) {
           </Button>
           <Button
             onClick={() => {
-              props.setShowEditBookModal(false);
+              props.setShowCreateBookModal(false);
               setImageBook(undefined);
             }}
           >
@@ -256,4 +248,4 @@ function EditBookModal(props: EditBookModalProps) {
   );
 }
 
-export default EditBookModal;
+export default CreateBookModal;

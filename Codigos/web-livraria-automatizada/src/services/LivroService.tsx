@@ -26,10 +26,14 @@ function updateBook(book: Livro) {
   return api.patch(`/livro`, book);
 }
 
-function deleteBook(idLivro: any){
+function deleteBook(idLivro: any) {
   return api.delete(`/livro/${idLivro}`);
 }
 
-const LivroService = { findAll, findById, updateBook, deleteBook };
+function saveBook(book: Livro) {
+  return api.post(`/livro`, book);
+}
+
+const LivroService = { saveBook, findAll, findById, updateBook, deleteBook };
 
 export default LivroService;
