@@ -1,5 +1,6 @@
 package br.com.unip.apilivrariaautomatizada.controller;
 
+import br.com.unip.apilivrariaautomatizada.model.request.LivroCreateRequest;
 import br.com.unip.apilivrariaautomatizada.model.request.LivroUpdateRequest;
 import br.com.unip.apilivrariaautomatizada.model.response.LivroResponse;
 import br.com.unip.apilivrariaautomatizada.service.LivroService;
@@ -19,7 +20,7 @@ public class LivroController {
     private final LivroService livroService;
 
     @PostMapping
-    public ResponseEntity<Void> criarLivro(@RequestBody LivroUpdateRequest request) {
+    public ResponseEntity<Void> criarLivro(@Valid @RequestBody LivroCreateRequest request) {
         livroService.criarLivro(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

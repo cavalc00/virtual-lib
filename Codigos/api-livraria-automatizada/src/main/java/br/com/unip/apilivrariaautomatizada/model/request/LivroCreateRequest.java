@@ -6,31 +6,33 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class LivroUpdateRequest {
+public class LivroCreateRequest {
 
-    @NotNull
-    private Long id;
-
+    @NotBlank(message = "Titulo necessário.")
     private String titulo;
 
-    @NotNull
+    @NotNull(message = "Genero necessário.")
     private GeneroLivroDTO generoLivro;
 
     private String resumo;
 
+    @NotBlank(message = "Autor necessário.")
     private String autor;
 
     private String editora;
 
     private Integer anoLancamento;
 
+    @NotNull(message = "Flag necessária.")
     private Boolean flagDisponivel;
 
     private String capa;
+
 }

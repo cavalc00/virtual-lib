@@ -63,7 +63,7 @@ public class ImageService {
             if (file.delete()) {
                 System.out.println("Image " + id + " deleted!");
             } else {
-                System.out.println("Image " + id + " failed!");
+                System.out.println("Image " + id + " no exist!");
             }
         }
 

@@ -2,6 +2,7 @@ package br.com.unip.apilivrariaautomatizada.service;
 
 import br.com.unip.apilivrariaautomatizada.mapper.LivroMapper;
 import br.com.unip.apilivrariaautomatizada.model.dto.ImageDTO;
+import br.com.unip.apilivrariaautomatizada.model.request.LivroCreateRequest;
 import br.com.unip.apilivrariaautomatizada.model.request.LivroUpdateRequest;
 import br.com.unip.apilivrariaautomatizada.model.entity.GeneroLivro;
 import br.com.unip.apilivrariaautomatizada.model.entity.Livro;
@@ -26,26 +27,31 @@ public class LivroService {
     private final GeneroLivroRepository generoLivroRepository;
     private final LivroMapper livroMapper;
 
-    public void criarLivro(LivroUpdateRequest request) {
+    public void criarLivro(LivroCreateRequest request) {
+        GeneroLivro generoLivro = generoLivroRepository.findById(request.getGeneroLivro().getId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
+        );
 
-//        GeneroLivro generoLivro = generoLivroRepository.findById(request).orElseThrow(
-//                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
-//        );
-//
-//        try {
-//            Livro livro = Livro.builder()
-//                    .titulo(request.getTitulo())
-//                    .generoLivro(generoLivro.getId())
-//                    .resumo(request.getResumo())
-//                    .autor(request.getAutor())
-//                    .anoLancamento(request.getAnoLancamento())
-//                    .editora(request.getEditora())
-//                    .build();
-//
-//            livroRepository.save(livro);
-//        } catch (Exception e) {
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-//        }
+        try {
+            Livro livro = Livro.builder()
+                    .titulo(request.getTitulo())
+                    .generoLivro(generoLivro)
+                    .resumo(request.getResumo())
+                    .autor(request.getAutor())
+                    .flagDisponivel(request.getFlagDisponivel())
+                    .anoLancamento(request.getAnoLancamento())
+                    .editora(request.getEditora())
+                    .build();
+
+            Livro novoLivro = livroRepository.save(livro);
+
+            if (request.getCapa() != null && request.getCapa().length() > 0) {
+                imageService.UpdateOrSaveImageFromBase64(novoLivro.getId(), request.getCapa());
+            }
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     public void atualizarLivro(LivroUpdateRequest request) {

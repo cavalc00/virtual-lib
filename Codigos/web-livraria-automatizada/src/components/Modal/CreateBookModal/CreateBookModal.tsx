@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Button, Card, Form, Modal, Spinner } from "react-bootstrap";
 import GeneroLivro from "../../../models/GeneroLivro";
+import Livro from "../../../models/Livro";
+import LivroService from "../../../services/LivroService";
 import "./style.scss";
 
 type CreateBookModalProps = {
@@ -69,6 +71,40 @@ function CreateBookModal(props: CreateBookModalProps) {
     );
   }
 
+  async function saveBook() {
+    setLoading(true);
+    let base64String: any;
+
+    if (imageBook) {
+      base64String = await convertBlobToBase64(imageBook);
+    }
+
+    if (Number(anoLivro) == 0) setAnoLivro(undefined);
+
+    const book: Livro = {
+      titulo: tituloLivro,
+      autor: autorLivro,
+      editora: editoraLivro,
+      flagDisponivel: disponivelLivro,
+      anoLancamento: Number(anoLivro),
+      capa: base64String,
+      resumo: resumoLivro,
+      generoLivro: props.generos?.find((genero) => genero.nome == generoLivro),
+    };
+
+    LivroService.saveBook(book)
+      .then((response) => {
+        props.setShowCreateBookModal(false);
+        console.log(response.data);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        props.onRefresh();
+        setLoading(false);
+      });
+
+  }
+
   return (
     <Modal
       onExit={() => setImageTip("Escolha uma imagem no formato jpg ou png.")}
@@ -132,6 +168,7 @@ function CreateBookModal(props: CreateBookModalProps) {
           <Form.Group className="mb-3">
             <Form.Label>Ano da Publicação</Form.Label>
             <Form.Control
+              required
               type="number"
               placeholder="Publicação do Livro"
               onChange={(event) => {
@@ -190,6 +227,7 @@ function CreateBookModal(props: CreateBookModalProps) {
           <Button
             type="submit"
             onClick={() => {
+              saveBook();
               setDisableButton(true);
             }}
             disabled={disableButton}
