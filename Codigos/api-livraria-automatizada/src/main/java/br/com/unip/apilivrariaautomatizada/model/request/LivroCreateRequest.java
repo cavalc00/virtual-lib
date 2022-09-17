@@ -28,6 +28,7 @@ public class LivroCreateRequest {
 
     private String editora;
 
+    @NotNull(message = "Ano necessário.")
     private Integer anoLancamento;
 
     @NotNull(message = "Flag necessária.")

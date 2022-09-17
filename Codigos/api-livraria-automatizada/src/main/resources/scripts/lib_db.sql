@@ -39,7 +39,7 @@ CREATE TABLE Livro (
 	Titulo VARCHAR(255) not null,
 	Autor VARCHAR(155) not null,
 	Editora VARCHAR(100) null,
-	Ano INT null,
+	Ano INT not null,
 	FlagDisponivel BIT not null,
 	foreign key (IdGenero) references GeneroLivro(IdGenero),
 primary KEY(IdLivro)

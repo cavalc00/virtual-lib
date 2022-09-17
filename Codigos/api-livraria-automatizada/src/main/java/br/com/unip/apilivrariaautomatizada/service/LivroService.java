@@ -16,7 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -86,6 +89,7 @@ public class LivroService {
 
         try {
             livroRepository.delete(livro);
+            imageService.deleteImageById(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -96,7 +100,16 @@ public class LivroService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
         );
 
-        return livroMapper.toLivroResponse(livro);
+        LivroResponse response = livroMapper.toLivroResponse(livro);
+
+        try {
+            ImageDTO imageById = imageService.getImageById(id);
+            if (Objects.nonNull(imageById)) response.setCapa(imageById.getImagem());
+        } catch (IOException | SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return response;
     }
 
     public List<LivroResponse> mostrarTodosLivros(Long idGeneroLivro, String nomeLivro) {
