@@ -19,7 +19,6 @@ public class LivroUpdateRequest {
 
     private String titulo;
 
-    @NotNull
     private GeneroLivroDTO generoLivro;
 
     private String resumo;

@@ -7,7 +7,7 @@ function findAll(idGeneroLivro?: any, tituloLivro?: string) {
     myParams.append("idGeneroLivro", idGeneroLivro);
   }
 
-  if (tituloLivro && tituloLivro != " ") {
+  if (tituloLivro && tituloLivro !== " ") {
     myParams.append("nomeLivro", tituloLivro);
   }
 

@@ -1,10 +1,8 @@
 package br.com.unip.apilivrariaautomatizada.model.entity;
 
-import br.com.unip.apilivrariaautomatizada.model.enums.GeneroEnum;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Blob;
 
 @Entity
 @Getter

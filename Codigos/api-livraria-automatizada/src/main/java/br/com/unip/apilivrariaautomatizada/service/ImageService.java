@@ -2,7 +2,6 @@ package br.com.unip.apilivrariaautomatizada.service;
 
 import br.com.unip.apilivrariaautomatizada.config.ApplicationProperties;
 import br.com.unip.apilivrariaautomatizada.model.dto.ImageDTO;
-import br.com.unip.apilivrariaautomatizada.model.enums.ExtensionEnum;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.rowset.serial.SerialBlob;
-import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +29,27 @@ public class ImageService {
 
     private final String fileSeparator = System.getProperty("file.separator");
 
+
+    public ImageDTO getImageById(Long id) throws IOException, SQLException {
+        Map<Long, String> mapPathByImageId = getMapPathByImageId();
+        String pathImage = mapPathByImageId.get(id);
+        SerialBlob image = new SerialBlob(IOUtils.toByteArray(new FileInputStream(pathImage)));
+        return ImageDTO.builder().id(id).imagem(image).build();
+    }
+
+    public void deleteImageById(Long id) {
+        Map<Long, String> mapPathByImageId = getMapPathByImageId();
+        String filePath = mapPathByImageId.get(id);
+
+        if (Objects.nonNull(filePath)) {
+            File file = new File(filePath);
+            if (file.delete()) {
+                System.out.println("Image " + id + " deleted!");
+            } else {
+                System.out.println("Image " + id + " no exist!");
+            }
+        }
+    }
 
     public List<ImageDTO> getAllImages() throws IOException, SQLException {
         List<ImageDTO> allImages = new ArrayList<>();

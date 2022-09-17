@@ -48,10 +48,10 @@ function CreateBookModal(props: CreateBookModalProps) {
         event.target.files[0].type == "image/png")
     ) {
       setImageTip("Imagem no formato correto.");
-      setDisableButton(false);
+      validateForm();
     } else {
       setImageTip("Imagem no formato incorreto.");
-      setDisableButton(true);
+      validateForm();
     }
   }
 
@@ -69,6 +69,18 @@ function CreateBookModal(props: CreateBookModalProps) {
         )}
       </div>
     );
+  }
+
+  function clearAllStates() {
+    setTituloLivro(undefined);
+    setGeneroLivro(undefined);
+    setAutorLivro(undefined);
+    setAnoLivro(undefined);
+    setResumoLivro(undefined);
+    setDisponivelLivro(false);
+    setEditoraLivro(undefined);
+    setImageBook(undefined);
+    setImageTip("Escolha uma imagem no formato jpg ou png.");
   }
 
   async function saveBook() {
@@ -102,12 +114,26 @@ function CreateBookModal(props: CreateBookModalProps) {
         props.onRefresh();
         setLoading(false);
       });
+  }
 
+  function validateForm() {
+    if (
+      tituloLivro &&
+      tituloLivro?.length > 0 &&
+      anoLivro &&
+      anoLivro?.length > 0 &&
+      autorLivro &&
+      autorLivro?.length > 0
+    ) {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
   }
 
   return (
     <Modal
-      onExit={() => setImageTip("Escolha uma imagem no formato jpg ou png.")}
+      onExit={() => clearAllStates()}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -118,7 +144,7 @@ function CreateBookModal(props: CreateBookModalProps) {
           closeButton
           onClick={() => {
             props.setShowCreateBookModal(false);
-            setImageBook(undefined);
+            clearAllStates();
           }}
         >
           <Modal.Title id="contained-modal-title-vcenter">
@@ -133,8 +159,8 @@ function CreateBookModal(props: CreateBookModalProps) {
               className="form-control"
               placeholder="Titulo Livro"
               onChange={(event) => {
-                setDisableButton(false);
                 setTituloLivro(event.target.value);
+                validateForm();
               }}
             />
           </Form.Group>
@@ -143,8 +169,8 @@ function CreateBookModal(props: CreateBookModalProps) {
             <Form.Select
               required
               onChange={(event) => {
-                setDisableButton(false);
                 setGeneroLivro(event.target.value);
+                validateForm();
               }}
             >
               {props.generos?.map((genero, index) => (
@@ -159,8 +185,8 @@ function CreateBookModal(props: CreateBookModalProps) {
               required
               placeholder="Autor do Livro"
               onChange={(event) => {
-                setDisableButton(false);
                 setAutorLivro(event.target.value);
+                validateForm();
               }}
             />
           </Form.Group>
@@ -172,8 +198,8 @@ function CreateBookModal(props: CreateBookModalProps) {
               type="number"
               placeholder="Publicação do Livro"
               onChange={(event) => {
-                setDisableButton(false);
                 setAnoLivro(event.target.value);
+                validateForm();
               }}
             />
           </Form.Group>
@@ -182,8 +208,8 @@ function CreateBookModal(props: CreateBookModalProps) {
             <Form.Control
               placeholder="Editora do Livro"
               onChange={(event) => {
-                setDisableButton(false);
                 setEditoraLivro(event.target.value);
+                validateForm();
               }}
             />
           </Form.Group>
@@ -194,8 +220,8 @@ function CreateBookModal(props: CreateBookModalProps) {
               rows={5}
               placeholder="Resumo do Livro"
               onChange={(event) => {
-                setDisableButton(false);
                 setResumoLivro(event.target.value);
+                validateForm();
               }}
             />
           </Form.Group>
@@ -205,6 +231,7 @@ function CreateBookModal(props: CreateBookModalProps) {
               type="file"
               onChange={(event) => {
                 fileSelectedHandler(event);
+                validateForm();
               }}
             />
             <Form.Text>{tipImage}</Form.Text>
@@ -215,8 +242,8 @@ function CreateBookModal(props: CreateBookModalProps) {
                 type="checkbox"
                 label="Livro disponível?"
                 onChange={(event) => {
-                  setDisableButton(false);
                   setDisponivelLivro(event.target.checked);
+                  validateForm();
                 }}
               />
             </Form.Group>
