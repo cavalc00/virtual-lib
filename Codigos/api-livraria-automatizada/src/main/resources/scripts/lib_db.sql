@@ -17,10 +17,9 @@ CREATE TABLE Perfil(
 create table Usuario(
 	IdUsuario BIGINT auto_increment not null,
 	Nome VARCHAR(255) not null,
-	Cpf VARCHAR(14) not null,
+	IdGoogle VARCHAR(500) not null,
 	Email VARCHAR(155) not null,
-	Login VARCHAR(155) not null,
-	Senha VARCHAR(255) not null,
+	FotoPerfil VARCHAR(500) null,
 primary key (IdUsuario)
 ) ENGINE=InnoDB;
 
@@ -39,7 +38,7 @@ CREATE TABLE Livro (
 	Titulo VARCHAR(255) not null,
 	Autor VARCHAR(155) not null,
 	Editora VARCHAR(100) null,
-	Ano INT not null,
+	Ano INT null,
 	FlagDisponivel BIT not null,
 	foreign key (IdGenero) references GeneroLivro(IdGenero),
 primary KEY(IdLivro)
@@ -67,3 +66,7 @@ INSERT INTO liv_db.generolivro (Nome) VALUES
 ('Humanidades e Ciências Sociais'), ('Tecnologia e Ciência');
 
 INSERT INTO liv_db.perfil (Tipo) VALUES ('Admin'), ('User');
+
+
+
+

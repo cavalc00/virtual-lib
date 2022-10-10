@@ -1,13 +1,15 @@
-import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import Base from "./components/Base/Base";
-import Header from "./components/Header/Header";
+import store from "./configs/store/store";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Base />
-    </BrowserRouter>
+    <AuthProvider store={store}>
+      <BrowserRouter>
+        <Base />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

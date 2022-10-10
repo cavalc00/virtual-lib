@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name = "usuario")
-public class Usuario implements UserDetails {
+public class Usuario implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +26,14 @@ public class Usuario implements UserDetails {
     @Column(name = "Nome")
     private String nome;
 
-    @Column(name = "Cpf")
-    private String cpf;
-
     @Column(name = "Email")
     private String email;
 
-    @Column(name = "Login")
-    private String login;
+    @Column(name = "FotoPerfil")
+    private String picture;
 
-    @Column(name = "Senha")
-    private String senha;
+    @Column(name = "IdGoogle")
+    private String idGoogle;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -53,12 +50,12 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.senha;
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return this.login;
+        return this.email;
     }
 
     @Override

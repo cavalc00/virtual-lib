@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Nav,
-  Navbar,
-  NavDropdown,
-} from "react-bootstrap";
-import GeneroLivro from "../../models/GeneroLivro";
-import GeneroService from "../../services/GeneroService";
+import { gapi } from "gapi-script";
+import { useContext, useEffect } from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import AuthContext from "../../contexts/AuthContext";
+import LoginButton from "../LoginButton/LoginButton";
+import LoginInfo from "../LoginInfo/LoginInfo";
+import LogoutButton from "../LogoutButton/LogoutButton";
 import "./style.scss";
 
 function Header() {
+  const { state } = useContext(AuthContext);
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: process.env.REACT_APP_GOOGLE_KEY as string,
+      });
+    }
+
+    gapi.load("client:auth2", start);
+  });
+
   return (
     <Navbar className="margin-down" bg="light" expand="sm" fixed="top">
       <Container fluid>
@@ -26,6 +34,12 @@ function Header() {
             <Nav.Link href="/">Lista de livros</Nav.Link>
             <Nav.Link href="/about">Sobre</Nav.Link>
           </Nav>
+          <Nav className="info-container">
+            <LoginInfo />
+          </Nav>
+          <div className="login-style">
+            {state.user.email != "" ? <LogoutButton /> : <LoginButton />}
+          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>

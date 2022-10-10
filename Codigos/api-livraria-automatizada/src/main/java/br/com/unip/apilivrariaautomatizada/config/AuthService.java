@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -19,7 +18,7 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Usuario> user = usuarioRepository.findByLogin(username);
+        Optional<Usuario> user = usuarioRepository.findByEmail(username);
         return user.orElseThrow(
                 () -> new UsernameNotFoundException("Dados inválidos!")
         );
