@@ -21,7 +21,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     public final static String TOKEN_HEADER = "Authorization";
     private final TokenService jwtAuthService;
 
-
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager, TokenService jwtAuthService) {
         super(authenticationManager);
         this.jwtAuthService = jwtAuthService;
