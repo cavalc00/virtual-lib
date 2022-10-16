@@ -3,7 +3,7 @@ import { GoogleLogin } from "react-google-login";
 import Storage from "../../configs/Storage";
 import { logged } from "../../configs/store/actions";
 import AuthContext from "../../contexts/AuthContext";
-import { Usuario } from "../../models/Usuario";
+import { EMPTY_USER, Usuario } from "../../models/Usuario";
 import UserService from "../../services/UserService";
 
 function LoginButton() {
@@ -17,16 +17,19 @@ function LoginButton() {
         Storage.setToken(res.tokenId);
         Storage.setUser(responseUser);
         dispatch(logged(responseUser));
+        console.log(responseUser);
       })
       .catch((err: any) => {
         console.log(err);
         Storage.removeSessionToken();
+        Storage.setUser(EMPTY_USER);
+        dispatch(logged(EMPTY_USER));
       });
   };
 
   const onFailure = (err: any) => {
     //dispatch(message(ErrorUtils.getMessage(err, t)));
-    console.log(err)
+    console.log(err);
   };
 
   return (

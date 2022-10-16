@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import CardBook from "../../components/CardBook/CardBook";
 import CreateBookModal from "../../components/Modal/CreateBookModal/CreateBookModal";
+import useLoggedUser from "../../configs/LoggedUser";
 import GeneroLivro from "../../models/GeneroLivro";
 import Livro from "../../models/Livro";
 import GeneroService from "../../services/GeneroService";
@@ -25,6 +26,7 @@ function Home() {
   const [idGeneroSelecionado, setIdGeneroSelecionado] = useState<any>();
   const [tituloSelecionado, setTituloSelecionado] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  const loggedUser = useLoggedUser();
   const [showCreateBookModal, setShowCreateBookModal] =
     useState<boolean>(false);
 
@@ -129,15 +131,19 @@ function Home() {
             </Form>
           </Nav>
           <Nav>
-            <Button
-              variant="outline-success"
-              className="new-book-button"
-              onClick={() => {
-                setShowCreateBookModal(true);
-              }}
-            >
-              <FontAwesomeIcon icon={faSquarePlus} />
-            </Button>
+            {loggedUser.role.find((r) => r.tipo == "Admin") ? (
+              <Button
+                variant="outline-success"
+                className="new-book-button"
+                onClick={() => {
+                  setShowCreateBookModal(true);
+                }}
+              >
+                <FontAwesomeIcon icon={faSquarePlus} />
+              </Button>
+            ) : (
+              <></>
+            )}
             <Button
               variant="outline-danger"
               onClick={() => {

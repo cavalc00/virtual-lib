@@ -25,7 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CorsProperties corsProperties;
     private final TokenService tokenService;
 
-
     @Override //Para configurar autorização
     protected void configure(HttpSecurity http) throws Exception {
         if (corsProperties.isEnabled()) {
@@ -37,13 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .addFilterAfter(getJWTAuthorizationFilter(), CorsFilter.class)
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
-
 
     @Bean
     @ConditionalOnProperty(value = "cors.enabled", havingValue = "true", matchIfMissing = false)
