@@ -19,6 +19,7 @@ import GeneroService from "../../services/GeneroService";
 import EditBookModal from "../Modal/EditBookModal/EditBookModal";
 import DeleteBookModal from "../Modal/DeleteBookModal/DeleteBookModal";
 import CreateBookModal from "../Modal/CreateBookModal/CreateBookModal";
+import useLoggedUser from "../../configs/LoggedUser";
 
 export type ContentCardProps = {
   livros?: Livro[];
@@ -33,6 +34,7 @@ function CardBook(props: ContentCardProps) {
   const [showEditBookModal, setShowEditBookModal] = useState<boolean>();
   const [showDeleteBookModal, setShowDeleteEditBookModal] = useState<boolean>();
   const [selectedBook, setSelectedBook] = useState<Livro>();
+  const loggedUser = useLoggedUser();
 
   function openDeleteBookModal(b: Livro) {
     setSelectedBook(b);
@@ -77,17 +79,27 @@ function CardBook(props: ContentCardProps) {
                   </ListGroup>
                   <div className="edit-buttons-style">
                     <Card.Body className="edit-button-style">
+
+                    {loggedUser.role.find((r) => (r.tipo == "Admin")) ? (
                       <Button size="sm" onClick={() => openEditBookModal(book)}>
                         <FontAwesomeIcon icon={faPencil} />
                       </Button>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        style={{ marginLeft: "10px" }}
-                        onClick={() => openDeleteBookModal(book)}
-                      >
-                        <FontAwesomeIcon icon={faTrashCan} />
-                      </Button>
+                      ) : (
+                        <></>
+                      )}
+
+                      {loggedUser.role.find((r) => (r.tipo == "Admin")) ? (
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          style={{ marginLeft: "10px" }}
+                          onClick={() => openDeleteBookModal(book)}
+                        >
+                          <FontAwesomeIcon icon={faTrashCan} />
+                        </Button>
+                      ) : (
+                        <></>
+                      )}
                     </Card.Body>
                     <Card.Body className="button-style">
                       <Button
