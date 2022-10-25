@@ -1,4 +1,5 @@
 export type Usuario = {
+    id: number | null;
     name: string;
     picture: string;
     email: string;
@@ -11,6 +12,7 @@ export type Perfil = {
 }
 
 export const EMPTY_USER = {
+    id: null,
     name: "",
     picture: "",
     email: "",

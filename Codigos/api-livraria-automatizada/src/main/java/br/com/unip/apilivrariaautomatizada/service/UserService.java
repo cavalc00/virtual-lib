@@ -24,9 +24,7 @@ public class UserService {
 
     private final UsuarioRepository usuarioRepository;
     private final PerfilRepository perfilRepository;
-
     private final UsuarioMapper usuarioMapper;
-
 
     public boolean isAuthenticated() {
         return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
@@ -52,7 +50,7 @@ public class UserService {
 
         if (user.isPresent()) return user.get();
 
-        Usuario usuario = Usuario.builder()
+        Usuario newUser = Usuario.builder()
                 .nome(userDTO.getName())
                 .email(userDTO.getUsername())
                 .picture(userDTO.getPicture())
@@ -60,7 +58,7 @@ public class UserService {
                 .perfis(List.of(perfil))
                 .build();
 
-        usuarioRepository.save(usuario);
+        Usuario usuario = usuarioRepository.save(newUser);
         return usuario;
     }
 }
