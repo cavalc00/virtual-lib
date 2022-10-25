@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties({CorsProperties.class})
+
 public class ApiLivrariaAutomatizadaApplication {
 
 	public static void main(String[] args) {
