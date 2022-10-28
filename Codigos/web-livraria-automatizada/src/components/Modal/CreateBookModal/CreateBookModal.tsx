@@ -99,7 +99,7 @@ function CreateBookModal(props: CreateBookModalProps) {
       editora: editoraLivro,
       flagDisponivel: disponivelLivro,
       anoLancamento: Number(anoLivro),
-      capa: base64String,
+      imageUrl: base64String,
       resumo: resumoLivro,
       generoLivro: props.generos?.find((genero) => genero.nome == generoLivro),
     };

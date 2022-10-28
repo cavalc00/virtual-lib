@@ -59,7 +59,7 @@ function CardBook(props: ContentCardProps) {
                   <Card.Img
                     className="image-format"
                     variant="top"
-                    src={`data:image/jpeg;base64,${book.capa}`}
+                    src={book?.imageUrl}
                   />
                 </div>
                 <Card.Body className="ml-3">

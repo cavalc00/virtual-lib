@@ -9,7 +9,7 @@ type Livro = {
   editora?: string | undefined;
   anoLancamento?: number;
   resumo?: string | undefined;
-  capa?: any | undefined;
+  imageUrl?: any | undefined;
   flagDisponivel: boolean;
 };
 

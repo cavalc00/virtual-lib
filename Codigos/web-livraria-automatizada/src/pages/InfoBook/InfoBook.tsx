@@ -22,11 +22,11 @@ function InfoBook() {
   function renderPreviewImage() {
     return (
       <>
-        {livro?.capa ? (
+        {livro?.imageUrl ? (
           <Card.Img
             className="display-image"
             variant="top"
-            src={`data:image/jpeg;base64,${livro.capa}`}
+            src={livro.imageUrl}
           />
         ) : (
           <h4>Livro não possui imagem cadastrada!</h4>
