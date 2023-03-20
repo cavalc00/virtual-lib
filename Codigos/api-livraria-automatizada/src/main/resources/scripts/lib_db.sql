@@ -66,7 +66,3 @@ INSERT INTO liv_db.generolivro (Nome) VALUES
 ('Humanidades e Ciências Sociais'), ('Tecnologia e Ciência');
 
 INSERT INTO liv_db.perfil (Tipo) VALUES ('Admin'), ('User');
-
-
-
-
