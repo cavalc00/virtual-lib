@@ -1,6 +1,6 @@
 package br.com.unip.apilivrariaautomatizada.model.response;
 
-import br.com.unip.apilivrariaautomatizada.model.enums.GeneroEnum;
+import br.com.unip.apilivrariaautomatizada.model.enums.FlagEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,5 +30,5 @@ public class LivroResponse {
 
     private Blob capa;
 
-    private Boolean flagDisponivel;
+    private FlagEnum flag;
 }
