@@ -1,6 +1,7 @@
 package br.com.unip.apilivrariaautomatizada.model.request;
 
 import br.com.unip.apilivrariaautomatizada.model.dto.GeneroLivroDTO;
+import br.com.unip.apilivrariaautomatizada.model.enums.FlagEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,7 +30,7 @@ public class LivroUpdateRequest {
 
     private Integer anoLancamento;
 
-    private Boolean flagDisponivel;
+    private FlagEnum flag;
 
     private String capa;
 }

@@ -10,7 +10,7 @@ type Livro = {
   anoLancamento?: number;
   resumo?: string | undefined;
   capa?: any | undefined;
-  flagDisponivel: boolean;
+  flag: 'DISPONIVEL' | 'INDISPONIVEL' | 'RESERVADO';
 };
 
 export default Livro;

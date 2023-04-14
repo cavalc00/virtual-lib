@@ -3,6 +3,7 @@ package br.com.unip.apilivrariaautomatizada.service;
 import br.com.unip.apilivrariaautomatizada.model.entity.Livro;
 import br.com.unip.apilivrariaautomatizada.model.entity.LocacaoLivro;
 import br.com.unip.apilivrariaautomatizada.model.entity.Usuario;
+import br.com.unip.apilivrariaautomatizada.model.enums.FlagEnum;
 import br.com.unip.apilivrariaautomatizada.repository.LivroRepository;
 import br.com.unip.apilivrariaautomatizada.repository.LocacaoLivroRepository;
 import br.com.unip.apilivrariaautomatizada.repository.UsuarioRepository;
@@ -32,7 +33,7 @@ public class LocacaoService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
 
-        if (livro.getFlagDisponivel()) {
+        if (livro.getFlag() == FlagEnum.DISPONIVEL) {
             LocacaoLivro locacaoLivro = LocacaoLivro.builder()
                     .livro(livro)
                     .usuario(usuario)
@@ -40,8 +41,12 @@ public class LocacaoService {
                     .dataDevolvido(null)
                     .build();
 
-            LocacaoLivro locacaoLivro1 = locacaoLivroRepository.save(locacaoLivro);
-            return "Livro" + livro.getTitulo() + " alugado em " + locacaoLivro1.getDataLocado().toString();
+            LocacaoLivro locacaoSalva = locacaoLivroRepository.save(locacaoLivro);
+
+            livro.setFlag(FlagEnum.RESERVADO);
+            livroRepository.save(livro);
+
+            return "Livro" + livro.getTitulo() + " alugado em " + locacaoSalva.getDataLocado().toString();
         } else {
             return "Livro" + livro.getTitulo() + " indisponivel";
         }
