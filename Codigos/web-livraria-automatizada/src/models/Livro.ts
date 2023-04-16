@@ -10,6 +10,7 @@ type Livro = {
     resumo?: string | undefined;
     capa?: any | undefined;
     flag: "DISPONIVEL" | "INDISPONIVEL" | "RESERVADO";
+    imageUrl: any;
 };
 
 export default Livro;

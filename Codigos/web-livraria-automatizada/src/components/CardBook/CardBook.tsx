@@ -53,7 +53,7 @@ function CardBook(props: ContentCardProps) {
           <ProgressBar animated now={90} />
         ) : (
           <Row className="row-blocks">
-            {props.livros?.map((book, index) => (
+            {props.livros?.map((book: Livro, index) => (
               <Card className="book-style" key={index}>
                 <div>
                   <Card.Img
