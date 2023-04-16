@@ -32,7 +32,7 @@ function CreateBookModal(props: CreateBookModalProps) {
   const [autorLivro, setAutorLivro] = useState<string>();
   const [anoLivro, setAnoLivro] = useState<string>();
   const [resumoLivro, setResumoLivro] = useState<string>();
-  const [disponivelLivro, setDisponivelLivro] = useState<boolean>(false);
+  const [disponivelLivro, setDisponivelLivro] = useState<'DISPONIVEL' | 'INDISPONIVEL' | 'RESERVADO'>('INDISPONIVEL');
   const [editoraLivro, setEditoraLivro] = useState<string>();
   const [imageBook, setImageBook] = useState<Blob>();
   const [tipImage, setImageTip] = useState<string>(
@@ -77,7 +77,7 @@ function CreateBookModal(props: CreateBookModalProps) {
     setAutorLivro(undefined);
     setAnoLivro(undefined);
     setResumoLivro(undefined);
-    setDisponivelLivro(false);
+    setDisponivelLivro('INDISPONIVEL');
     setEditoraLivro(undefined);
     setImageBook(undefined);
     setImageTip("Escolha uma imagem no formato jpg ou png.");
@@ -97,7 +97,7 @@ function CreateBookModal(props: CreateBookModalProps) {
       titulo: tituloLivro,
       autor: autorLivro,
       editora: editoraLivro,
-      flagDisponivel: disponivelLivro,
+      flag: disponivelLivro,
       anoLancamento: Number(anoLivro),
       imageUrl: base64String,
       resumo: resumoLivro,
@@ -242,7 +242,11 @@ function CreateBookModal(props: CreateBookModalProps) {
                 type="checkbox"
                 label="Livro disponível?"
                 onChange={(event) => {
-                  setDisponivelLivro(event.target.checked);
+                  if(event.target.checked){
+                    setDisponivelLivro('DISPONIVEL');
+                  } else {
+                    setDisponivelLivro('INDISPONIVEL');
+                  }
                   validateForm();
                 }}
               />

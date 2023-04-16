@@ -2,6 +2,7 @@ package br.com.unip.apilivrariaautomatizada.service;
 
 import br.com.unip.apilivrariaautomatizada.mapper.LivroMapper;
 import br.com.unip.apilivrariaautomatizada.model.dto.ImageDTO;
+import br.com.unip.apilivrariaautomatizada.model.enums.FlagEnum;
 import br.com.unip.apilivrariaautomatizada.model.request.LivroCreateRequest;
 import br.com.unip.apilivrariaautomatizada.model.request.LivroUpdateRequest;
 import br.com.unip.apilivrariaautomatizada.model.entity.GeneroLivro;
@@ -41,7 +42,7 @@ public class LivroService {
                     .generoLivro(generoLivro)
                     .resumo(request.getResumo())
                     .autor(request.getAutor())
-                    .flagDisponivel(request.getFlagDisponivel())
+                    .flag(request.getFlag())
                     .anoLancamento(request.getAnoLancamento())
                     .editora(request.getEditora())
                     .build();
@@ -61,6 +62,8 @@ public class LivroService {
         Livro livro = livroRepository.findById(request.getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado")
         );
+
+        if (livro.getFlag().equals(FlagEnum.RESERVADO)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não é possivel alterar um livro já reservado");
 
         if (request.getGeneroLivro() != null) {
             GeneroLivro genero = generoLivroRepository.findById(request.getGeneroLivro().getId()).orElseThrow(

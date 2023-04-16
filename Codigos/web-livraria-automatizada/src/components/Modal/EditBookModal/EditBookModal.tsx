@@ -38,7 +38,7 @@ function EditBookModal(props: EditBookModalProps) {
   const [autorLivro, setAutorLivro] = useState<string>();
   const [anoLivro, setAnoLivro] = useState<string>();
   const [resumoLivro, setResumoLivro] = useState<string>();
-  const [disponivelLivro, setDisponivelLivro] = useState<boolean>(false);
+  const [disponivelLivro, setDisponivelLivro] = useState<'DISPONIVEL' | 'INDISPONIVEL' | 'RESERVADO'>('DISPONIVEL');
   const [editoraLivro, setEditoraLivro] = useState<string>();
   const [imageBook, setImageBook] = useState<File>();
 
@@ -60,7 +60,7 @@ function EditBookModal(props: EditBookModalProps) {
       titulo: tituloLivro,
       autor: autorLivro,
       editora: editoraLivro,
-      flagDisponivel: disponivelLivro,
+      flag: disponivelLivro,
       anoLancamento: Number(anoLivro),
       imageUrl: imageBook,
       resumo: resumoLivro,
@@ -206,7 +206,11 @@ function EditBookModal(props: EditBookModalProps) {
                 label="Livro disponível?"
                 onChange={(event) => {
                   setDisableButton(false);
-                  setDisponivelLivro(event.target.checked);
+                  if(event.target.checked){
+                    setDisponivelLivro('DISPONIVEL');
+                  } else {
+                    setDisponivelLivro('INDISPONIVEL');
+                  }
                 }}
               />
             </Form.Group>

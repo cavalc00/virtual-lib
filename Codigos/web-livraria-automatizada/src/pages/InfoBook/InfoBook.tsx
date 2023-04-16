@@ -40,9 +40,13 @@ function InfoBook() {
       {renderPreviewImage()}
       <Card className="book-details">
         <div className="badge">
-          {livro?.flagDisponivel == true ? (
+          {livro?.flag == "DISPONIVEL" ? (
             <Badge pill bg="success">
               Disponível
+            </Badge>
+          ) : livro?.flag == "RESERVADO" ? (
+            <Badge pill bg="primary">
+              Reservado
             </Badge>
           ) : (
             <Badge pill bg="danger">

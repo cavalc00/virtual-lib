@@ -8,8 +8,8 @@ type Livro = {
     editora?: string | undefined;
     anoLancamento?: number;
     resumo?: string | undefined;
-    imageUrl?: any | undefined;
-    flagDisponivel: boolean;
+    capa?: any | undefined;
+    flag: "DISPONIVEL" | "INDISPONIVEL" | "RESERVADO";
 };
 
 export default Livro;
