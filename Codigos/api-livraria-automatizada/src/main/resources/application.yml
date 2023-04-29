@@ -31,7 +31,7 @@ cors:
   allowed-origins: "*"
   exposed-headers: Content-Disposition, Content-Length, Content-Type
 app:
-  imagesPath: C:\\Projects\\virtual-lib\\ImagensLivros
+  imagesPath: F:\\Projects\\virtual-lib\\ImagensLivros
   oauth2:
     # After successfully authenticating with the OAuth2 Provider,
     # we'll be generating an auth token for the user and sending the token to the
