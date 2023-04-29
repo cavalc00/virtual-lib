@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Badge, Card, ListGroup } from "react-bootstrap";
+import { Badge, Button, Card, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Livro from "../../models/Livro";
 import LivroService from "../../services/LivroService";
 import "./style.scss";
+import LocacaoService from "../../services/LocacaoService";
+import Storage from "../../configs/Storage";
 
 function InfoBook() {
   const { id } = useParams();
   const [livro, setLivro] = useState<Livro>();
+  const localUser = Storage.getUser()
 
   useEffect(() => {
     getBookById();
@@ -35,16 +38,21 @@ function InfoBook() {
     );
   }
 
+  function sendReserve(idLivro: string) {
+    LocacaoService.reserveBook(idLivro, localUser.email)
+    window.location.reload();
+  }
+
   return (
     <div className="container">
       {renderPreviewImage()}
       <Card className="book-details">
         <div className="badge">
-          {livro?.flag == "DISPONIVEL" ? (
+          {livro?.flag === "DISPONIVEL" ? (
             <Badge pill bg="success">
               Disponível
             </Badge>
-          ) : livro?.flag == "RESERVADO" ? (
+          ) : livro?.flag === "RESERVADO" ? (
             <Badge pill bg="primary">
               Reservado
             </Badge>
@@ -66,6 +74,32 @@ function InfoBook() {
               <li>{`É disponível pela editora ${livro?.editora}`}</li>
             </ul>
           </ListGroup>
+          {livro?.flag === "DISPONIVEL" ? (
+            <Button
+              variant="btn btn-success"
+              onClick={() => {
+                sendReserve(livro?.id);
+              }}
+            >
+              Reservar Livro
+            </Button>
+          ) : livro?.flag === "RESERVADO" ? (
+            <Button
+              variant="btn btn-primary"
+              disabled
+            >
+              Reservado
+            </Button>
+          ) : (
+            <Button
+              variant="btn btn-danger"
+              onClick={() => {
+                sendReserve(livro?.id);
+              }}
+            >
+              Livro Indisponível
+            </Button>
+          )}
         </Card.Body>
       </Card>
     </div>
