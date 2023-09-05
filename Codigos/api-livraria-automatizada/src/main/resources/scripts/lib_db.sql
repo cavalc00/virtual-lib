@@ -40,6 +40,7 @@ CREATE TABLE Livro (
 	Editora VARCHAR(100) null,
 	Ano INT null,
 	Flag VARCHAR(100) not null,
+	Prateleira INT not null,
 	foreign key (IdGenero) references GeneroLivro(IdGenero),
 primary KEY(IdLivro)
 ) ENGINE=InnoDB;
