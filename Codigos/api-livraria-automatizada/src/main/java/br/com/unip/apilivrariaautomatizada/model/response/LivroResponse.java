@@ -31,4 +31,6 @@ public class LivroResponse {
     private Blob capa;
 
     private FlagEnum flag;
+
+    private Integer prateleira;
 }
