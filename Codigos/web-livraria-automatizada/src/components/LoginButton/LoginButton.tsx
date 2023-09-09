@@ -24,8 +24,13 @@ function LoginButton() {
         Storage.removeSessionToken();
         Storage.setUser(EMPTY_USER);
         dispatch(logged(EMPTY_USER));
-      });
+      })
+      .finally(() => refreshPage());
   };
+
+  function refreshPage() {
+    window.location.reload();
+  }
 
   const onFailure = (err: any) => {
     //dispatch(message(ErrorUtils.getMessage(err, t)));

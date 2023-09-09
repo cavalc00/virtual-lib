@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GoogleLogout } from "react-google-login";
 import Storage from "../../configs/Storage";
 import { logged } from "../../configs/store/actions";
@@ -12,12 +12,17 @@ function LogoutButton() {
     Storage.removeSessionToken();
     Storage.setUser(EMPTY_USER);
     dispatch(logged(EMPTY_USER));
+    refreshPage();
     console.log("Logout Success!");
   };
 
   const onFailure = () => {
     console.log("Logout failed");
   };
+
+  function refreshPage() {
+    window.location.reload();
+  }
 
   return (
     <div>
