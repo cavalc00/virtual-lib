@@ -43,6 +43,11 @@ function InfoBook() {
     window.location.reload();
   }
 
+  function updateReserve(livroAtualizacao: Livro, flag: "DISPONIVEL" | "INDISPONIVEL" | "RESERVADO"){
+    LivroService.updateBook({...livroAtualizacao, flag})
+    window.location.reload();
+  }
+
   return (
     <div className="container">
       {renderPreviewImage()}
@@ -92,8 +97,10 @@ function InfoBook() {
                 Reservar Livro
               </Button>
             ) : livro?.flag === "RESERVADO" ? (
-              <Button variant="btn btn-primary" disabled>
-                Reservado
+              <Button variant="btn btn-primary" onClick={() => {
+                updateReserve(livro, 'DISPONIVEL')
+              }}>
+                Devolver
               </Button>
             ) : (
               <Button
