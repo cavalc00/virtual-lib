@@ -1,9 +1,13 @@
 import api from "../configs/api";
 
-function reserveBook(idLocacao: string, email: string) {
-    return api.post(`/locacao/${idLocacao}?userLogin=${email}`);
+function reserveBook(idLivro: string, email: string) {
+  return api.post(`/locacao/${idLivro}?userLogin=${email}`);
 }
 
-const LocacaoService = { reserveBook };
+function returnBook(idLivro: string) {
+  return api.put(`/locacao/${idLivro}`);
+}
+
+const LocacaoService = { reserveBook, returnBook };
 
 export default LocacaoService;

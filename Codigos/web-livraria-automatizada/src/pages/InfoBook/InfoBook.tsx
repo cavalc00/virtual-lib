@@ -43,8 +43,8 @@ function InfoBook() {
     window.location.reload();
   }
 
-  function updateReserve(livroAtualizacao: Livro, flag: "DISPONIVEL" | "INDISPONIVEL" | "RESERVADO"){
-    LivroService.updateBook({...livroAtualizacao, flag})
+  function updateReserve(idLivro: string){
+    LocacaoService.returnBook(idLivro);
     window.location.reload();
   }
 
@@ -98,7 +98,7 @@ function InfoBook() {
               </Button>
             ) : livro?.flag === "RESERVADO" ? (
               <Button variant="btn btn-primary" onClick={() => {
-                updateReserve(livro, 'DISPONIVEL')
+                updateReserve(livro.id);
               }}>
                 Devolver
               </Button>

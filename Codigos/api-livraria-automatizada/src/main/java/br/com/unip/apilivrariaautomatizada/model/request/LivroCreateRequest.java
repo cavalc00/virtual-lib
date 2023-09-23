@@ -37,4 +37,7 @@ public class LivroCreateRequest {
 
     private String capa;
 
+    @NotNull(message = "Prateleira necessária.")
+    private Integer prateleira;
+
 }
