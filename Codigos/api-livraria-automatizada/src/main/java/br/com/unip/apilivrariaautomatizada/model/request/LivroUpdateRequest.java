@@ -33,4 +33,6 @@ public class LivroUpdateRequest {
     private FlagEnum flag;
 
     private String capa;
+
+    private Integer prateleira;
 }
