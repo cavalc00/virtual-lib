@@ -96,7 +96,7 @@ function InfoBook() {
               >
                 Reservar Livro
               </Button>
-            ) : livro?.flag === "RESERVADO" ? (
+            ) : livro?.flag === "RESERVADO" && localUser != null ? (
               <Button variant="btn btn-primary" onClick={() => {
                 updateReserve(livro.id);
               }}>
