@@ -64,4 +64,10 @@ public class LocacaoService {
         livroRepository.save(livro);
         locacaoLivroRepository.save(locacaoLivro);
     }
+
+
+    public Boolean isReservedByUser(Long idBook, String email) {
+        LocacaoLivro locacaoLivro = locacaoLivroRepository.findByIdLivro(idBook).stream().findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return locacaoLivro.getUsuario().getEmail().equals(email);
+    }
 }
