@@ -38,6 +38,7 @@ function CreateBookModal(props: CreateBookModalProps) {
   const [tipImage, setImageTip] = useState<string>(
     "Escolha uma imagem no formato jpg ou png."
   );
+  const [prateleira, setPrateleira] = useState<string>();
 
   function fileSelectedHandler(event: any) {
     setImageBook(event.target.files[0]);
@@ -80,6 +81,7 @@ function CreateBookModal(props: CreateBookModalProps) {
     setDisponivelLivro('INDISPONIVEL');
     setEditoraLivro(undefined);
     setImageBook(undefined);
+    setPrateleira(undefined);
     setImageTip("Escolha uma imagem no formato jpg ou png.");
   }
 
@@ -102,6 +104,7 @@ function CreateBookModal(props: CreateBookModalProps) {
       capa: base64String,
       resumo: resumoLivro,
       generoLivro: props.generos?.find((genero) => genero.nome == generoLivro),
+      prateleira: Number(prateleira)
     };
 
     LivroService.saveBook(book)
@@ -236,6 +239,19 @@ function CreateBookModal(props: CreateBookModalProps) {
             />
             <Form.Text>{tipImage}</Form.Text>
           </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Prateleira</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Prateleira do Livro"
+              onChange={(event) => {
+                setDisableButton(false);
+                setPrateleira(event.target.value);
+              }}
+            />
+          </Form.Group>
+
           <div className="space-between">
             <Form.Group className="mb-3" style={{ marginTop: "10px" }}>
               <Form.Check

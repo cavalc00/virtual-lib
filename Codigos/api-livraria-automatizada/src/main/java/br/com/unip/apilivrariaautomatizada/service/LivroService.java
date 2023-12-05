@@ -45,6 +45,7 @@ public class LivroService {
                     .flag(request.getFlag())
                     .anoLancamento(request.getAnoLancamento())
                     .editora(request.getEditora())
+                    .prateleira(request.getPrateleira())
                     .build();
 
             Livro novoLivro = livroRepository.save(livro);

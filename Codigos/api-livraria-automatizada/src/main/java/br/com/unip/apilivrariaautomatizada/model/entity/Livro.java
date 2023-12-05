@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,7 +18,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Getter
@@ -58,4 +61,7 @@ public class Livro {
 
     @Column(name = "Prateleira")
     private Integer prateleira;
+
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+    private List<LocacaoLivro> locacaoLivros;
 }

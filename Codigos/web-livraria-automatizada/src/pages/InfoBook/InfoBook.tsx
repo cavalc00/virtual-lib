@@ -10,15 +10,23 @@ import Storage from "../../configs/Storage";
 function InfoBook() {
   const { id } = useParams();
   const [livro, setLivro] = useState<Livro>();
+  const [isUser, setIsUser] = useState<Boolean>(false);
   const localUser = Storage.getUser();
 
   useEffect(() => {
     getBookById();
+    getIsUser(id, localUser.email);
   }, [id]);
 
   function getBookById() {
     LivroService.findById(id)
       .then((response) => setLivro(response.data))
+      .catch((error) => console.log(error));
+  }
+
+  function getIsUser(idLivro: any, email: string) {
+    LocacaoService.isReservedByUser(idLivro, email)
+      .then((response) => setIsUser(response.data))
       .catch((error) => console.log(error));
   }
 
@@ -43,12 +51,17 @@ function InfoBook() {
     window.location.reload();
   }
 
+  function updateReserve(idLivro: string) {
+    LocacaoService.returnBook(idLivro);
+    window.location.reload();
+  }
+
   return (
     <div className="container">
       {renderPreviewImage()}
       <Card className="book-details">
         <div className="title-badge">
-        <h4>Prateleira: {livro?.prateleira}</h4>
+          <h4>Prateleira: {livro?.prateleira}</h4>
           <div className="badge">
             {livro?.flag === "DISPONIVEL" ? (
               <Badge pill bg="success">
@@ -91,9 +104,14 @@ function InfoBook() {
               >
                 Reservar Livro
               </Button>
-            ) : livro?.flag === "RESERVADO" ? (
-              <Button variant="btn btn-primary" disabled>
-                Reservado
+            ) : livro?.flag === "RESERVADO" && localUser != null && isUser ? (
+              <Button
+                variant="btn btn-primary"
+                onClick={() => {
+                  updateReserve(livro.id);
+                }}
+              >
+                Devolver
               </Button>
             ) : (
               <Button

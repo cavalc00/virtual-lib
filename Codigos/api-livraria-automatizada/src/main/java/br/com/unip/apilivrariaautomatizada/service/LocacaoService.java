@@ -14,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 
+import static br.com.unip.apilivrariaautomatizada.model.enums.FlagEnum.DISPONIVEL;
+
 @Service
 @RequiredArgsConstructor
 public class LocacaoService {
@@ -33,7 +35,7 @@ public class LocacaoService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
 
-        if (livro.getFlag() == FlagEnum.DISPONIVEL) {
+        if (livro.getFlag() == DISPONIVEL) {
             LocacaoLivro locacaoLivro = LocacaoLivro.builder()
                     .livro(livro)
                     .usuario(usuario)
@@ -50,5 +52,22 @@ public class LocacaoService {
         } else {
             return "Livro" + livro.getTitulo() + " indisponivel";
         }
+    }
+
+    public void returnBook(Long livroId) {
+        Livro livro = livroRepository.findById(livroId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        LocacaoLivro locacaoLivro = locacaoLivroRepository.findByIdLivro(livroId).stream().findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        livro.setFlag(DISPONIVEL);
+        locacaoLivro.setDataDevolvido(LocalDate.now());
+
+        livroRepository.save(livro);
+        locacaoLivroRepository.save(locacaoLivro);
+    }
+
+
+    public Boolean isReservedByUser(Long idBook, String email) {
+        LocacaoLivro locacaoLivro = locacaoLivroRepository.findByIdLivro(idBook).stream().findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return locacaoLivro.getUsuario().getEmail().equals(email);
     }
 }
